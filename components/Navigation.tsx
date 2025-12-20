@@ -26,7 +26,7 @@ export default function Navigation() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-primary-600">
+            <Link href="/" className="text-2xl font-bold text-gray-900">
               SeniorCare
             </Link>
           </div>
@@ -41,10 +41,10 @@ export default function Navigation() {
                   key={item.name}
                   href={item.href}
                   className={clsx(
-                    'flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                    'flex items-center px-4 py-2 text-sm font-medium transition-colors border-b-2',
                     isActive
-                      ? 'bg-primary-100 text-primary-700'
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                      ? 'border-blue-600 text-gray-900'
+                      : 'border-transparent text-gray-600 hover:text-gray-900'
                   )}
                 >
                   <Icon size={18} className="mr-2" />
