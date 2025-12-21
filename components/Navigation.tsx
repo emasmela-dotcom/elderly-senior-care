@@ -3,14 +3,17 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Users, Calendar, FileText, Activity, Heart, Shield, Menu, X, Share2 } from 'lucide-react'
+import { Home, Users, Calendar, FileText, Activity, Heart, Shield, Menu, X, Share2, Pill, Activity as ActivityIcon, Stethoscope, ClipboardList } from 'lucide-react'
 import { clsx } from 'clsx'
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
   { name: 'Residents', href: '/residents', icon: Users },
   { name: 'Caregivers', href: '/caregivers', icon: Heart },
-  { name: 'Schedules', href: '/schedules', icon: Calendar },
+  { name: 'Medications', href: '/medications', icon: Pill },
+  { name: 'Vital Signs', href: '/vitals', icon: ActivityIcon },
+  { name: 'Appointments', href: '/appointments', icon: Calendar },
+  { name: 'Symptoms', href: '/symptoms', icon: ClipboardList },
   { name: 'Health Records', href: '/health-records', icon: FileText },
   { name: 'Activities', href: '/activities', icon: Activity },
   { name: 'Safety', href: '/safety', icon: Shield },
@@ -79,7 +82,7 @@ export default function Navigation() {
                     className={clsx(
                       'flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-colors',
                       isActive
-                        ? 'bg-primary-100 text-primary-700'
+                        ? 'bg-gray-100 text-gray-900'
                         : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                     )}
                   >

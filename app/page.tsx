@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Users, Calendar, FileText, Activity, Heart, Shield, Share2, Smartphone } from 'lucide-react'
+import { Users, Calendar, FileText, Activity, Heart, Shield, Share2, Smartphone, Pill, Activity as ActivityIcon, ClipboardList } from 'lucide-react'
 
 export default function Home() {
   const features = [
@@ -50,6 +50,30 @@ export default function Home() {
       title: 'Mobile Caregiver View',
       description: 'Optimized mobile experience for caregivers',
       href: '/caregiver-mobile',
+    },
+    {
+      icon: Pill,
+      title: 'Medication Reminders',
+      description: 'Push notifications with pill photos and scheduling',
+      href: '/medications',
+    },
+    {
+      icon: ActivityIcon,
+      title: 'Vital Signs Tracking',
+      description: 'Blood pressure, weight, glucose with charts',
+      href: '/vitals',
+    },
+    {
+      icon: Calendar,
+      title: 'Appointment Management',
+      description: 'Doctor visits with prep checklists',
+      href: '/appointments',
+    },
+    {
+      icon: ClipboardList,
+      title: 'Symptom Logging',
+      description: 'Daily health notes for doctor visits',
+      href: '/symptoms',
     },
   ]
 
