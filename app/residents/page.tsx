@@ -14,7 +14,7 @@ export default function ResidentsPage() {
         </div>
         <Link
           href="/residents/new"
-          className="flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+          className="flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
         >
           <Plus size={20} className="mr-2" />
           Add New Resident
@@ -22,17 +22,17 @@ export default function ResidentsPage() {
       </div>
 
       {/* Search and Filter */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div className="bg-white border border-gray-200 p-4 mb-6">
         <div className="flex gap-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
               placeholder="Search residents by name, room number, or ID..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
             />
           </div>
-          <button className="flex items-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+          <button className="flex items-center px-4 py-2 border border-gray-300 hover:bg-gray-50">
             <Filter size={20} className="mr-2" />
             Filter
           </button>
@@ -41,7 +41,7 @@ export default function ResidentsPage() {
 
       {/* Residents List */}
       {residents.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-md p-12 text-center">
+        <div className="bg-white border border-gray-200 p-12 text-center">
           <div className="text-gray-400 mb-4">
             <svg
               className="mx-auto h-12 w-12"
@@ -61,7 +61,7 @@ export default function ResidentsPage() {
           <p className="text-gray-600 mb-4">Get started by adding your first resident.</p>
           <Link
             href="/residents/new"
-            className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
           >
             <Plus size={20} className="mr-2" />
             Add New Resident

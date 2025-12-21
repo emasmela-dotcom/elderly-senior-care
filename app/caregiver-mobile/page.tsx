@@ -41,22 +41,17 @@ export default function CaregiverMobilePage() {
   }
 
   const getTaskColor = (type: string) => {
-    switch (type) {
-      case 'medication': return 'bg-red-100 text-red-600'
-      case 'health': return 'bg-blue-100 text-blue-600'
-      case 'activity': return 'bg-green-100 text-green-600'
-      default: return 'bg-gray-100 text-gray-600'
-    }
+    return 'bg-gray-100 text-gray-700 border border-gray-300'
   }
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       {/* Mobile Header */}
-      <div className="bg-primary-600 text-white p-4 sticky top-0 z-10">
+      <div className="bg-gray-900 text-white p-4 sticky top-0 z-10">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold">Caregiver Dashboard</h1>
-            <p className="text-sm text-primary-100">{format(selectedDate, 'EEEE, MMMM d, yyyy')}</p>
+            <p className="text-sm text-gray-300">{format(selectedDate, 'EEEE, MMMM d, yyyy')}</p>
           </div>
           <Bell size={24} />
         </div>
@@ -65,13 +60,13 @@ export default function CaregiverMobilePage() {
       {/* Urgent Alerts */}
       {urgentAlerts.length > 0 && (
         <div className="mx-4 mt-4">
-          <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+          <div className="bg-white border-l-4 border-gray-900 p-4">
             <div className="flex items-center">
-              <AlertCircle className="text-red-600 mr-2" size={20} />
+              <AlertCircle className="text-gray-700 mr-2" size={20} />
               <div className="flex-1">
-                <h3 className="font-semibold text-red-900">Urgent Alerts</h3>
+                <h3 className="font-semibold text-gray-900">Urgent Alerts</h3>
                 {urgentAlerts.map((alert) => (
-                  <p key={alert.id} className="text-sm text-red-700 mt-1">
+                  <p key={alert.id} className="text-sm text-gray-700 mt-1">
                     {alert.resident}: {alert.message}
                   </p>
                 ))}
@@ -83,16 +78,16 @@ export default function CaregiverMobilePage() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-2 mx-4 mt-4">
-        <div className="bg-white rounded-lg p-3 text-center shadow-sm">
-          <div className="text-2xl font-bold text-primary-600">{todayTasks.filter(t => t.status === 'pending').length}</div>
+        <div className="bg-white border border-gray-200 p-3 text-center">
+          <div className="text-2xl font-bold text-gray-900">{todayTasks.filter(t => t.status === 'pending').length}</div>
           <div className="text-xs text-gray-600 mt-1">Pending</div>
         </div>
-        <div className="bg-white rounded-lg p-3 text-center shadow-sm">
-          <div className="text-2xl font-bold text-green-600">{todayTasks.filter(t => t.status === 'completed').length}</div>
+        <div className="bg-white border border-gray-200 p-3 text-center">
+          <div className="text-2xl font-bold text-gray-900">{todayTasks.filter(t => t.status === 'completed').length}</div>
           <div className="text-xs text-gray-600 mt-1">Completed</div>
         </div>
-        <div className="bg-white rounded-lg p-3 text-center shadow-sm">
-          <div className="text-2xl font-bold text-blue-600">{todayTasks.length}</div>
+        <div className="bg-white border border-gray-200 p-3 text-center">
+          <div className="text-2xl font-bold text-gray-900">{todayTasks.length}</div>
           <div className="text-xs text-gray-600 mt-1">Total</div>
         </div>
       </div>
@@ -101,7 +96,7 @@ export default function CaregiverMobilePage() {
       <div className="mx-4 mt-4">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-semibold text-gray-900">Today's Schedule</h2>
-          <Link href="/schedules" className="text-primary-600 text-sm font-medium">
+          <Link href="/schedules" className="text-blue-600 text-sm font-medium">
             View All →
           </Link>
         </div>
@@ -113,8 +108,8 @@ export default function CaregiverMobilePage() {
             return (
               <div
                 key={task.id}
-                className={`bg-white rounded-lg p-4 shadow-sm border-l-4 ${
-                  task.status === 'completed' ? 'border-green-500' : 'border-primary-500'
+                className={`bg-white border border-gray-200 p-4 border-l-4 ${
+                  task.status === 'completed' ? 'border-gray-400' : 'border-gray-900'
                 }`}
               >
                 <div className="flex items-start justify-between">
@@ -131,10 +126,10 @@ export default function CaregiverMobilePage() {
                     <div className="text-sm text-gray-600">{task.task}</div>
                   </div>
                   <button
-                    className={`ml-4 p-2 rounded-full ${
+                    className={`ml-4 p-2 ${
                       task.status === 'completed'
-                        ? 'bg-green-100 text-green-600'
-                        : 'bg-gray-100 text-gray-400 hover:bg-primary-100 hover:text-primary-600'
+                        ? 'bg-gray-200 text-gray-700'
+                        : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-700'
                     }`}
                   >
                     <CheckCircle2 size={20} />
@@ -152,30 +147,30 @@ export default function CaregiverMobilePage() {
         <div className="grid grid-cols-2 gap-3">
           <Link
             href="/residents"
-            className="bg-white rounded-lg p-4 shadow-sm flex items-center justify-center flex-col"
+            className="bg-white border border-gray-200 p-4 flex items-center justify-center flex-col"
           >
-            <Users className="text-primary-600 mb-2" size={24} />
+            <Users className="text-gray-700 mb-2" size={24} />
             <span className="text-sm font-medium text-gray-900">Residents</span>
           </Link>
           <Link
             href="/health-records"
-            className="bg-white rounded-lg p-4 shadow-sm flex items-center justify-center flex-col"
+            className="bg-white border border-gray-200 p-4 flex items-center justify-center flex-col"
           >
-            <Heart className="text-red-600 mb-2" size={24} />
+            <Heart className="text-gray-700 mb-2" size={24} />
             <span className="text-sm font-medium text-gray-900">Health Records</span>
           </Link>
           <Link
             href="/schedules"
-            className="bg-white rounded-lg p-4 shadow-sm flex items-center justify-center flex-col"
+            className="bg-white border border-gray-200 p-4 flex items-center justify-center flex-col"
           >
-            <Calendar className="text-green-600 mb-2" size={24} />
+            <Calendar className="text-gray-700 mb-2" size={24} />
             <span className="text-sm font-medium text-gray-900">Schedules</span>
           </Link>
           <Link
             href="/family"
-            className="bg-white rounded-lg p-4 shadow-sm flex items-center justify-center flex-col"
+            className="bg-white border border-gray-200 p-4 flex items-center justify-center flex-col"
           >
-            <Users className="text-purple-600 mb-2" size={24} />
+            <Users className="text-gray-700 mb-2" size={24} />
             <span className="text-sm font-medium text-gray-900">Family Sharing</span>
           </Link>
         </div>
@@ -184,7 +179,7 @@ export default function CaregiverMobilePage() {
       {/* Bottom Navigation Bar (Mobile) */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
         <div className="flex justify-around items-center">
-          <Link href="/caregiver-mobile" className="flex flex-col items-center text-primary-600">
+          <Link href="/caregiver-mobile" className="flex flex-col items-center text-blue-600">
             <Calendar size={24} />
             <span className="text-xs mt-1">Today</span>
           </Link>
