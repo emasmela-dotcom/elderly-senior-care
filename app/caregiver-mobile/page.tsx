@@ -92,7 +92,7 @@ export default function CaregiverMobilePage() {
         </div>
       </div>
 
-      {/* Today's Schedule */}
+      {/* Today&apos;s Schedule */}
       <div className="mx-4 mt-4">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-semibold text-gray-900">Today&apos;s Schedule</h2>
