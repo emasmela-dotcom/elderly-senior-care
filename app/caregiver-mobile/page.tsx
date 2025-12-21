@@ -95,7 +95,7 @@ export default function CaregiverMobilePage() {
       {/* Today's Schedule */}
       <div className="mx-4 mt-4">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-semibold text-gray-900">Today's Schedule</h2>
+          <h2 className="text-lg font-semibold text-gray-900">Today&apos;s Schedule</h2>
           <Link href="/schedules" className="text-blue-600 text-sm font-medium">
             View All →
           </Link>

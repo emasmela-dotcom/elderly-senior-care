@@ -101,7 +101,7 @@ export default function Home() {
         </div>
         <div className="bg-white border border-gray-200 p-6 text-center">
           <div className="text-3xl font-bold text-gray-900 mb-2">0</div>
-          <div className="text-gray-600">Today's Appointments</div>
+          <div className="text-gray-600">Today&apos;s Appointments</div>
         </div>
         <div className="bg-white border border-gray-200 p-6 text-center">
           <div className="text-3xl font-bold text-gray-900 mb-2">0</div>

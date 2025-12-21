@@ -53,7 +53,7 @@ export default function HealthDataSharing({
             Health Data Sharing
           </h3>
           <p className="text-sm text-gray-600 mt-1">
-            Share {residentName}'s health information with family members and caregivers
+            Share {residentName}&apos;s health information with family members and caregivers
           </p>
         </div>
         <button
