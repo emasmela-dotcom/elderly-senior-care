@@ -1,7 +1,7 @@
 {
-  "name": "senior-care-management",
+  "name": "careconnect-24-7",
   "version": "1.0.0",
-  "description": "Comprehensive management system for elderly and senior care facilities",
+  "description": "24/7 comprehensive care management platform for elderly and senior care",
   "private": true,
   "scripts": {
     "dev": "next dev",

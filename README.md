@@ -1,6 +1,6 @@
-# Senior Care Management System
+# CareConnect 24/7
 
-A comprehensive management system for elderly and senior care facilities, built with Next.js, TypeScript, and Tailwind CSS.
+A comprehensive 24/7 care management platform for elderly and senior care, built with Next.js, TypeScript, and Tailwind CSS.
 
 ## Features
 
@@ -50,7 +50,7 @@ pnpm dev
 ## Project Structure
 
 ```
-senior-care-management/
+careconnect-24-7/
 ├── app/                    # Next.js App Router pages
 │   ├── activities/        # Activity management
 │   ├── caregivers/        # Caregiver management

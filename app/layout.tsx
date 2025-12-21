@@ -6,8 +6,8 @@ import Navigation from '@/components/Navigation'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'SeniorCare - Mobile-First Caregiver App',
-  description: 'Mobile-first caregiver management system for elderly and senior care. 73.9% of older adults are willing to share health app information with family members or caregivers.',
+  title: 'CareConnect 24/7 - Caregiver Management Platform',
+  description: '24/7 comprehensive care management platform for elderly and senior care. Mobile-first design for caregivers and families.',
   manifest: '/manifest.json',
   themeColor: '#0ea5e9',
   viewport: {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'SeniorCare',
+    title: 'CareConnect 24/7',
   },
   formatDetection: {
     telephone: false,

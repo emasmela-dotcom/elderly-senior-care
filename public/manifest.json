@@ -1,7 +1,7 @@
 {
-  "name": "SeniorCare - Caregiver App",
-  "short_name": "SeniorCare",
-  "description": "Mobile-first caregiver management system for elderly and senior care",
+  "name": "CareConnect 24/7 - Caregiver App",
+  "short_name": "CareConnect 24/7",
+  "description": "24/7 comprehensive care management platform for elderly and senior care",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

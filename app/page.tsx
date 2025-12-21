@@ -82,10 +82,10 @@ export default function Home() {
       {/* Hero Section */}
       <div className="text-center mb-12">
         <h1 className="text-5xl font-bold text-gray-900 mb-4">
-          Senior Care Management System
+          CareConnect 24/7
         </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Comprehensive care management platform for elderly and senior care facilities.
+          Comprehensive 24/7 care management platform for elderly and senior care.
         </p>
       </div>
 
