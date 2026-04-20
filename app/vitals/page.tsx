@@ -1,8 +1,25 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { Plus, Heart, Activity, Scale, Droplet } from 'lucide-react'
+import {
+  Plus,
+  Heart,
+  Activity,
+  Scale,
+  Droplet,
+} from 'lucide-react'
+import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from 'recharts'
 
 interface VitalSign {
   id: string
@@ -19,86 +36,146 @@ interface VitalSign {
 }
 
 export default function VitalsPage() {
-  const [vitals] = useState<VitalSign[]>([])
-  const [selectedMetric, setSelectedMetric] = useState<'bloodPressure' | 'heartRate' | 'weight' | 'glucose'>('bloodPressure')
+  const [vitals, setVitals] = useState<VitalSign[]>([])
+  const [selectedMetric, setSelectedMetric] = useState<
+    'bloodPressure' | 'heartRate' | 'weight' | 'glucose'
+  >('bloodPressure')
+  const [loadError, setLoadError] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  const load = useCallback(async () => {
+    setLoading(true)
+    setLoadError('')
+    try {
+      const res = await fetch('/api/vitals', { credentials: 'same-origin' })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setLoadError((data as { error?: string }).error || 'Could not load vitals')
+        setVitals([])
+        return
+      }
+      setVitals(Array.isArray(data) ? data : [])
+    } catch {
+      setLoadError('Network error')
+      setVitals([])
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    void load()
+  }, [load])
+
+  const chartRows = useMemo(() => {
+    const withBp = vitals.filter((v) => v.bloodPressure)
+    return withBp.map((v, i) => ({
+      label: `${v.date} ${v.time}`,
+      idx: i + 1,
+      systolic: v.bloodPressure!.systolic,
+      diastolic: v.bloodPressure!.diastolic,
+    }))
+  }, [vitals])
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Vital Signs Tracking</h1>
-          <p className="text-gray-600 mt-1">Monitor blood pressure, weight, glucose, and other vital signs with charts</p>
+          <p className="text-gray-600 mt-1">
+            Monitor blood pressure, weight, glucose, and other vital signs with charts
+          </p>
         </div>
-        <Link
-          href="/vitals/new"
-          className="flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
-        >
-          <Plus size={20} className="mr-2" />
-          Record Vitals
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <DownloadJsonButton filename="vitals.json" data={{ vitals }} />
+          <Link
+            href="/vitals/new"
+            className="flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
+          >
+            <Plus size={20} className="mr-2" aria-hidden />
+            Record Vitals
+          </Link>
+        </div>
       </div>
 
-      {vitals.length === 0 ? (
+      {loadError ? (
+        <div className="mb-4 p-4 border border-red-300 bg-red-50 text-red-900 text-sm" role="alert">
+          {loadError}
+        </div>
+      ) : null}
+
+      {loading ? (
+        <p className="text-gray-600">Loading…</p>
+      ) : vitals.length === 0 ? (
         <div className="bg-white border border-gray-200 p-12 text-center">
-          <Heart className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No vital signs recorded yet</h3>
+          <Heart className="mx-auto h-12 w-12 text-gray-400 mb-4" aria-hidden />
+          <h2 className="text-lg font-medium text-gray-900 mb-2">No vital signs recorded yet</h2>
           <p className="text-gray-600 mb-4">Start tracking vital signs to monitor health trends over time.</p>
           <Link
             href="/vitals/new"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
           >
-            <Plus size={20} className="mr-2" />
+            <Plus size={20} className="mr-2" aria-hidden />
             Record Vitals
           </Link>
         </div>
       ) : (
         <>
           <div className="bg-white border border-gray-200 p-6 mb-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Blood pressure trend</h2>
+            {chartRows.length > 0 ? (
+              <div className="h-72 w-full" role="img" aria-label="Blood pressure line chart">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartRows} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="idx" tick={{ fill: '#374151' }} />
+                    <YAxis tick={{ fill: '#374151' }} />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb' }}
+                      labelFormatter={(_, p) =>
+                        p?.[0]?.payload?.label != null ? String(p[0].payload.label) : ''
+                      }
+                    />
+                    <Legend />
+                    <Line type="monotone" dataKey="systolic" name="Systolic" stroke="#2563eb" strokeWidth={2} dot />
+                    <Line type="monotone" dataKey="diastolic" name="Diastolic" stroke="#7c3aed" strokeWidth={2} dot />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <p className="text-gray-600 text-sm">Add readings with blood pressure to see this chart.</p>
+            )}
+          </div>
+
+          <div className="bg-white border border-gray-200 p-6 mb-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">View Charts</h2>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setSelectedMetric('bloodPressure')}
-                className={`px-4 py-2 text-sm border ${
-                  selectedMetric === 'bloodPressure'
-                    ? 'border-blue-600 text-blue-600 bg-blue-50'
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Blood Pressure
-              </button>
-              <button
-                onClick={() => setSelectedMetric('heartRate')}
-                className={`px-4 py-2 text-sm border ${
-                  selectedMetric === 'heartRate'
-                    ? 'border-blue-600 text-blue-600 bg-blue-50'
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Heart Rate
-              </button>
-              <button
-                onClick={() => setSelectedMetric('weight')}
-                className={`px-4 py-2 text-sm border ${
-                  selectedMetric === 'weight'
-                    ? 'border-blue-600 text-blue-600 bg-blue-50'
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Weight
-              </button>
-              <button
-                onClick={() => setSelectedMetric('glucose')}
-                className={`px-4 py-2 text-sm border ${
-                  selectedMetric === 'glucose'
-                    ? 'border-blue-600 text-blue-600 bg-blue-50'
-                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Glucose
-              </button>
+            <div className="flex flex-wrap gap-2">
+              {(
+                [
+                  ['bloodPressure', 'Blood Pressure'],
+                  ['heartRate', 'Heart Rate'],
+                  ['weight', 'Weight'],
+                  ['glucose', 'Glucose'],
+                ] as const
+              ).map(([key, label]) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setSelectedMetric(key)}
+                  className={`px-4 py-2 text-sm border ${
+                    selectedMetric === key
+                      ? 'border-blue-600 text-blue-700 bg-blue-50'
+                      : 'border-gray-300 text-gray-900 hover:bg-gray-50'
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
             </div>
-            <div className="mt-6 h-64 border border-gray-200 flex items-center justify-center">
-              <p className="text-gray-500">Chart visualization will appear here</p>
+            <div className="mt-6 h-40 border border-gray-200 flex items-center justify-center text-gray-600 text-sm">
+              {selectedMetric === 'bloodPressure'
+                ? 'Use the chart above for blood pressure.'
+                : 'Additional metric charts can be added the same way as blood pressure.'}
             </div>
           </div>
 
@@ -108,45 +185,47 @@ export default function VitalsPage() {
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">{vital.residentName}</h3>
-                    <p className="text-sm text-gray-600">{vital.date} at {vital.time}</p>
-                    <p className="text-sm text-gray-500">Recorded by {vital.recordedBy}</p>
+                    <p className="text-sm text-gray-600">
+                      {vital.date} at {vital.time}
+                    </p>
+                    <p className="text-sm text-gray-500">Recorded by {vital.recordedBy || '—'}</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {vital.bloodPressure && (
                     <div className="border border-gray-200 p-3">
                       <div className="flex items-center mb-1">
-                        <Heart size={16} className="text-gray-600 mr-2" />
-                        <span className="text-sm text-gray-600">Blood Pressure</span>
+                        <Heart size={16} className="text-gray-700 mr-2" aria-hidden />
+                        <span className="text-sm text-gray-700">Blood Pressure</span>
                       </div>
                       <div className="text-xl font-semibold text-gray-900">
                         {vital.bloodPressure.systolic}/{vital.bloodPressure.diastolic}
                       </div>
                     </div>
                   )}
-                  {vital.heartRate && (
+                  {vital.heartRate != null && (
                     <div className="border border-gray-200 p-3">
                       <div className="flex items-center mb-1">
-                        <Activity size={16} className="text-gray-600 mr-2" />
-                        <span className="text-sm text-gray-600">Heart Rate</span>
+                        <Activity size={16} className="text-gray-700 mr-2" aria-hidden />
+                        <span className="text-sm text-gray-700">Heart Rate</span>
                       </div>
                       <div className="text-xl font-semibold text-gray-900">{vital.heartRate} bpm</div>
                     </div>
                   )}
-                  {vital.weight && (
+                  {vital.weight != null && (
                     <div className="border border-gray-200 p-3">
                       <div className="flex items-center mb-1">
-                        <Scale size={16} className="text-gray-600 mr-2" />
-                        <span className="text-sm text-gray-600">Weight</span>
+                        <Scale size={16} className="text-gray-700 mr-2" aria-hidden />
+                        <span className="text-sm text-gray-700">Weight</span>
                       </div>
                       <div className="text-xl font-semibold text-gray-900">{vital.weight} lbs</div>
                     </div>
                   )}
-                  {vital.glucose && (
+                  {vital.glucose != null && (
                     <div className="border border-gray-200 p-3">
                       <div className="flex items-center mb-1">
-                        <Droplet size={16} className="text-gray-600 mr-2" />
-                        <span className="text-sm text-gray-600">Glucose</span>
+                        <Droplet size={16} className="text-gray-700 mr-2" aria-hidden />
+                        <span className="text-sm text-gray-700">Glucose</span>
                       </div>
                       <div className="text-xl font-semibold text-gray-900">{vital.glucose} mg/dL</div>
                     </div>
@@ -160,4 +239,3 @@ export default function VitalsPage() {
     </div>
   )
 }
-

@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, Calendar, Clock, MapPin, FileText, CheckCircle2 } from 'lucide-react'
+import { DownloadJsonButton } from '@/components/DownloadJsonButton'
 import { format } from 'date-fns'
 
 interface Appointment {
@@ -20,16 +21,52 @@ interface Appointment {
 }
 
 interface ChecklistItem {
-  id: string
+  id?: string
   text: string
   completed: boolean
 }
 
 export default function AppointmentsPage() {
-  const [appointments] = useState<Appointment[]>([])
+  const [appointments, setAppointments] = useState<Appointment[]>([])
+  const [loadError, setLoadError] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  const load = useCallback(async () => {
+    setLoading(true)
+    setLoadError('')
+    try {
+      const res = await fetch('/api/appointments', { credentials: 'same-origin' })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setLoadError((data as { error?: string }).error || 'Could not load appointments')
+        setAppointments([])
+        return
+      }
+      setAppointments(Array.isArray(data) ? data : [])
+    } catch {
+      setLoadError('Network error')
+      setAppointments([])
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    void load()
+  }, [load])
+
   const today = new Date()
-  const upcoming = appointments.filter(apt => new Date(apt.date) >= today)
-  const past = appointments.filter(apt => new Date(apt.date) < today)
+  today.setHours(0, 0, 0, 0)
+  const upcoming = appointments.filter((apt) => {
+    const d = new Date(apt.date)
+    d.setHours(0, 0, 0, 0)
+    return d >= today
+  })
+  const past = appointments.filter((apt) => {
+    const d = new Date(apt.date)
+    d.setHours(0, 0, 0, 0)
+    return d < today
+  })
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -38,13 +75,16 @@ export default function AppointmentsPage() {
           <h1 className="text-3xl font-bold text-gray-900">Appointment Management</h1>
           <p className="text-gray-600 mt-1">Manage doctor visits with prep checklists and reminders</p>
         </div>
-        <Link
-          href="/appointments/new"
-          className="flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
-        >
-          <Plus size={20} className="mr-2" />
-          Schedule Appointment
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <DownloadJsonButton filename="appointments.json" data={{ appointments }} />
+          <Link
+            href="/appointments/new"
+            className="flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
+          >
+            <Plus size={20} className="mr-2" />
+            Schedule Appointment
+          </Link>
+        </div>
       </div>
 
       {appointments.length === 0 ? (
@@ -98,8 +138,8 @@ export default function AppointmentsPage() {
                               Preparation Checklist
                             </h4>
                             <div className="space-y-2">
-                              {apt.checklist.map((item) => (
-                                <div key={item.id} className="flex items-center">
+                              {apt.checklist.map((item, idx) => (
+                                <div key={item.id ?? idx} className="flex items-center">
                                   <CheckCircle2
                                     size={18}
                                     className={`mr-2 ${
@@ -123,14 +163,6 @@ export default function AppointmentsPage() {
                             <p className="text-sm text-gray-600">{apt.notes}</p>
                           </div>
                         )}
-                      </div>
-                      <div className="flex gap-2 ml-4">
-                        <Link
-                          href={`/appointments/${apt.id}/edit`}
-                          className="px-3 py-1 text-sm border border-gray-300 text-gray-700 hover:bg-gray-50"
-                        >
-                          Edit
-                        </Link>
                       </div>
                     </div>
                   </div>

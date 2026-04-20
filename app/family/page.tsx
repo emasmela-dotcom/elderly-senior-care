@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Users, Share2, Shield, Bell, Eye } from 'lucide-react'
+import { DownloadJsonButton } from '@/components/DownloadJsonButton'
 
 export default function FamilyPage() {
   // Mock data - replace with actual data fetching
@@ -8,11 +9,17 @@ export default function FamilyPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Family & Caregiver Sharing</h1>
-        <p className="text-gray-600">
-          Manage access and permissions for family members and caregivers.
-        </p>
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Family & Caregiver Sharing</h1>
+          <p className="text-gray-600">
+            Manage access and permissions for family members and caregivers.
+          </p>
+        </div>
+        <DownloadJsonButton
+          filename="family-sharing.json"
+          data={{ sharedResidents, familyMembers }}
+        />
       </div>
 
       {/* Sharing Stats */}

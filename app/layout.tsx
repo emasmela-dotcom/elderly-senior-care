@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
+import { Providers } from './providers'
+import { SkipLink } from '@/components/SkipLink'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,10 +41,13 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body className={inter.className}>
-        <Navigation />
-        <main className="min-h-screen bg-gray-50">
-          {children}
-        </main>
+        <Providers>
+          <SkipLink />
+          <Navigation />
+          <main id="main-content" className="min-h-screen bg-gray-50" tabIndex={-1}>
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   )

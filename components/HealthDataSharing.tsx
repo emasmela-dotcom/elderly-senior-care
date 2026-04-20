@@ -122,66 +122,68 @@ export default function HealthDataSharing({
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="share-email" className="block text-sm font-medium text-gray-700 mb-2">
                   Email Address
                 </label>
                 <input
+                  id="share-email"
                   type="email"
                   value={newShareEmail}
                   onChange={(e) => setNewShareEmail(e.target.value)}
                   placeholder="family@example.com"
-                  className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
+                  className="w-full px-4 py-2 border border-gray-300 text-gray-900 placeholder:text-gray-500 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="share-relationship" className="block text-sm font-medium text-gray-700 mb-2">
                   Relationship
                 </label>
                 <input
+                  id="share-relationship"
                   type="text"
                   value={newShareRelationship}
                   onChange={(e) => setNewShareRelationship(e.target.value)}
                   placeholder="Son, Daughter, Caregiver, etc."
-                  className="w-full px-4 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
+                  className="w-full px-4 py-2 border border-gray-300 text-gray-900 placeholder:text-gray-500 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
                 />
               </div>
               
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Access Level
-                </label>
+              <fieldset className="border-0 p-0 m-0">
+                <legend className="block text-sm font-medium text-gray-700 mb-2">Access Level</legend>
                 <div className="space-y-2">
-                  <label className="flex items-center p-3 border border-gray-300 cursor-pointer hover:bg-gray-50">
+                  <div className="flex items-start gap-3 p-3 border border-gray-300 hover:bg-gray-50">
                     <input
+                      id="access-full"
                       type="radio"
                       name="access"
                       value="full"
                       checked={newShareAccess === 'full'}
                       onChange={() => setNewShareAccess('full')}
-                      className="mr-3"
+                      className="mt-1 shrink-0"
                     />
-                    <div>
-                      <div className="font-medium text-gray-900">Full Access</div>
-                      <div className="text-sm text-gray-600">View all health records and data</div>
-                    </div>
-                  </label>
-                  <label className="flex items-center p-3 border border-gray-300 cursor-pointer hover:bg-gray-50">
+                    <label htmlFor="access-full" className="cursor-pointer text-gray-900 flex-1">
+                      <span className="font-medium block">Full Access</span>
+                      <span className="text-sm text-gray-600 block">View all health records and data</span>
+                    </label>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 border border-gray-300 hover:bg-gray-50">
                     <input
+                      id="access-limited"
                       type="radio"
                       name="access"
                       value="limited"
                       checked={newShareAccess === 'limited'}
                       onChange={() => setNewShareAccess('limited')}
-                      className="mr-3"
+                      className="mt-1 shrink-0"
                     />
-                    <div>
-                      <div className="font-medium text-gray-900">Limited Access</div>
-                      <div className="text-sm text-gray-600">View basic information only</div>
-                    </div>
-                  </label>
+                    <label htmlFor="access-limited" className="cursor-pointer text-gray-900 flex-1">
+                      <span className="font-medium block">Limited Access</span>
+                      <span className="text-sm text-gray-600 block">View basic information only</span>
+                    </label>
+                  </div>
                 </div>
-              </div>
+              </fieldset>
             </div>
 
             <div className="flex justify-end gap-3 mt-6">

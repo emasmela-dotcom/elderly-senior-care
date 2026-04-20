@@ -13,6 +13,7 @@ import {
   Activity,
   Bell
 } from 'lucide-react'
+import { DownloadJsonButton } from '@/components/DownloadJsonButton'
 import { format } from 'date-fns'
 
 export default function CaregiverMobilePage() {
@@ -53,7 +54,18 @@ export default function CaregiverMobilePage() {
             <h1 className="text-xl font-bold">Caregiver Dashboard</h1>
             <p className="text-sm text-gray-300">{format(selectedDate, 'EEEE, MMMM d, yyyy')}</p>
           </div>
-          <Bell size={24} />
+          <div className="flex items-center gap-2 shrink-0">
+            <DownloadJsonButton
+              variant="dark"
+              filename="caregiver-mobile.json"
+              data={{
+                date: selectedDate.toISOString(),
+                todayTasks,
+                urgentAlerts,
+              }}
+            />
+            <Bell size={24} className="text-white" aria-hidden />
+          </div>
         </div>
       </div>
 
