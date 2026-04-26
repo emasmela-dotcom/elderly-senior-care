@@ -27,7 +27,7 @@ export function ExportCsvButton({
           new Blob([csv], { type: 'text/csv;charset=utf-8' })
         )
       }}
-      className="flex items-center px-4 py-2 border border-gray-300 text-gray-900 bg-white hover:bg-gray-50 transition-colors"
+      className="flex items-center px-4 py-2 border border-garden-clay-200/85 text-garden-wood bg-white hover:bg-garden-sage-50/70 transition-colors"
     >
       <FileSpreadsheet size={20} className="mr-2 shrink-0" aria-hidden />
       {label}

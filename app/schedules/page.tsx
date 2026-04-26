@@ -47,8 +47,8 @@ export default function SchedulesPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Care Schedules</h1>
-          <p className="text-gray-600 mt-1">
+          <h1 className="text-3xl font-bold text-garden-wood">Care Schedules</h1>
+          <p className="text-garden-wood/75 mt-1">
             Manage medication schedules, appointments, and daily care routines
           </p>
         </div>
@@ -56,7 +56,7 @@ export default function SchedulesPage() {
           <DownloadJsonButton filename="schedules.json" data={{ schedules }} />
           <Link
             href="/schedules/new"
-            className="flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
+            className="flex items-center px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 transition-colors"
           >
             <Plus size={20} className="mr-2" aria-hidden />
             Create Schedule
@@ -71,15 +71,15 @@ export default function SchedulesPage() {
       ) : null}
 
       {loading ? (
-        <p className="text-gray-600">Loading…</p>
+        <p className="text-garden-wood/75">Loading…</p>
       ) : schedules.length === 0 ? (
-        <div className="bg-white border border-gray-200 p-8 text-center">
-          <CalendarIcon className="mx-auto h-12 w-12 text-gray-400 mb-4" aria-hidden />
-          <h2 className="text-lg font-medium text-gray-900 mb-2">No schedules yet</h2>
-          <p className="text-gray-600 mb-4">Create schedules for medications, appointments, and care activities.</p>
+        <div className="bg-white border border-garden-sage-200/65 p-8 text-center">
+          <CalendarIcon className="mx-auto h-12 w-12 text-garden-wood/45 mb-4" aria-hidden />
+          <h2 className="text-lg font-medium text-garden-wood mb-2">No schedules yet</h2>
+          <p className="text-garden-wood/75 mb-4">Create schedules for medications, appointments, and care activities.</p>
           <Link
             href="/schedules/new"
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 transition-colors"
           >
             <Plus size={20} className="mr-2" aria-hidden />
             Create Schedule
@@ -88,10 +88,10 @@ export default function SchedulesPage() {
       ) : (
         <ul className="space-y-3">
           {schedules.map((s) => (
-            <li key={s.id} className="bg-white border border-gray-200 p-4">
-              <h2 className="text-lg font-semibold text-gray-900">{s.title}</h2>
-              {s.description ? <p className="text-sm text-gray-700 mt-1">{s.description}</p> : null}
-              <p className="text-sm text-gray-600 mt-2">
+            <li key={s.id} className="bg-white border border-garden-sage-200/65 p-4">
+              <h2 className="text-lg font-semibold text-garden-wood">{s.title}</h2>
+              {s.description ? <p className="text-sm text-garden-wood/80 mt-1">{s.description}</p> : null}
+              <p className="text-sm text-garden-wood/75 mt-2">
                 {s.schedule_type ?? '—'} {s.start_date ? `· ${s.start_date}` : ''}{' '}
                 {s.end_date ? `– ${s.end_date}` : ''}
               </p>

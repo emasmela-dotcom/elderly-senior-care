@@ -47,10 +47,10 @@ export default function NewSchedulePage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-lg">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Create schedule</h1>
-      <form onSubmit={onSubmit} className="space-y-4 bg-white border border-gray-200 p-6">
+      <h1 className="text-3xl font-bold text-garden-wood mb-6">Create schedule</h1>
+      <form onSubmit={onSubmit} className="space-y-4 bg-white border border-garden-sage-200/65 p-6">
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="title" className="block text-sm font-medium text-garden-wood mb-1">
             Title
           </label>
           <input
@@ -58,11 +58,11 @@ export default function NewSchedulePage() {
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="description" className="block text-sm font-medium text-garden-wood mb-1">
             Description
           </label>
           <textarea
@@ -70,23 +70,23 @@ export default function NewSchedulePage() {
             rows={3}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="schedule_type" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="schedule_type" className="block text-sm font-medium text-garden-wood mb-1">
             Type
           </label>
           <input
             id="schedule_type"
             value={schedule_type}
             onChange={(e) => setScheduleType(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label htmlFor="start_date" className="block text-sm font-medium text-gray-900 mb-1">
+            <label htmlFor="start_date" className="block text-sm font-medium text-garden-wood mb-1">
               Start
             </label>
             <input
@@ -94,11 +94,11 @@ export default function NewSchedulePage() {
               type="date"
               value={start_date}
               onChange={(e) => setStartDate(e.target.value)}
-              className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+              className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
             />
           </div>
           <div>
-            <label htmlFor="end_date" className="block text-sm font-medium text-gray-900 mb-1">
+            <label htmlFor="end_date" className="block text-sm font-medium text-garden-wood mb-1">
               End
             </label>
             <input
@@ -106,7 +106,7 @@ export default function NewSchedulePage() {
               type="date"
               value={end_date}
               onChange={(e) => setEndDate(e.target.value)}
-              className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+              className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
             />
           </div>
         </div>
@@ -119,11 +119,11 @@ export default function NewSchedulePage() {
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 bg-blue-600 text-white border border-blue-700 disabled:opacity-60"
+            className="px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 disabled:opacity-60"
           >
             {saving ? 'Saving…' : 'Save'}
           </button>
-          <Link href="/schedules" className="px-4 py-2 border border-gray-300 text-gray-900 hover:bg-gray-50">
+          <Link href="/schedules" className="px-4 py-2 border border-garden-clay-200/85 text-garden-wood hover:bg-garden-sage-50/70">
             Cancel
           </Link>
         </div>

@@ -1,11 +1,22 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { DM_Sans, Fraunces } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import { Providers } from './providers'
 import { SkipLink } from '@/components/SkipLink'
+import { GardenBackdrop } from '@/components/GardenBackdrop'
 
-const inter = Inter({ subsets: ['latin'] })
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+})
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'CareConnect 24/7 - Caregiver Management Platform',
@@ -26,7 +37,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: '#0ea5e9',
+  themeColor: '#557049',
 }
 
 export default function RootLayout({
@@ -35,16 +46,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${dmSans.variable} ${fraunces.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
-      <body className={inter.className}>
+      <body className={`${dmSans.className} font-sans antialiased`}>
+        <GardenBackdrop />
         <Providers>
           <SkipLink />
           <Navigation />
-          <main id="main-content" className="min-h-screen bg-gray-50" tabIndex={-1}>
+          <main
+            id="main-content"
+            className="relative z-[1] min-h-screen"
+            tabIndex={-1}
+          >
             {children}
           </main>
         </Providers>
@@ -52,4 +68,3 @@ export default function RootLayout({
     </html>
   )
 }
-

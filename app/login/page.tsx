@@ -36,15 +36,15 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white border border-gray-200 p-8 shadow-sm">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">Sign in</h1>
-        <p className="text-sm text-gray-600 mb-6">
-          Use the demo password from <code className="text-gray-800">AUTH_DEMO_PASSWORD</code>{' '}
-          (default <code className="text-gray-800">demo</code>).
+      <div className="w-full max-w-md bg-white border border-garden-sage-200/65 p-8 shadow-sm">
+        <h1 className="text-2xl font-bold text-garden-wood mb-1">Sign in</h1>
+        <p className="text-sm text-garden-wood/75 mb-6">
+          Use the demo password from <code className="text-garden-wood">AUTH_DEMO_PASSWORD</code>{' '}
+          (default <code className="text-garden-wood">demo</code>).
         </p>
         <form onSubmit={onSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-garden-wood mb-1">
               Email
             </label>
             <input
@@ -55,11 +55,11 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-300 px-3 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
+              className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood focus:ring-2 focus:ring-garden-sage-500 focus:border-garden-sage-600"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-900 mb-1">
+            <label htmlFor="password" className="block text-sm font-medium text-garden-wood mb-1">
               Password
             </label>
             <input
@@ -70,13 +70,13 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 px-3 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
+              className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood focus:ring-2 focus:ring-garden-sage-500 focus:border-garden-sage-600"
             />
           </div>
           <div>
-            <span className="block text-sm font-medium text-gray-900 mb-2">Account type</span>
+            <span className="block text-sm font-medium text-garden-wood mb-2">Account type</span>
             <div className="flex gap-4">
-              <label className="flex items-center gap-2 text-gray-900">
+              <label className="flex items-center gap-2 text-garden-wood">
                 <input
                   type="radio"
                   name="role"
@@ -86,7 +86,7 @@ export default function LoginPage() {
                 />
                 Staff
               </label>
-              <label className="flex items-center gap-2 text-gray-900">
+              <label className="flex items-center gap-2 text-garden-wood">
                 <input
                   type="radio"
                   name="role"
@@ -105,7 +105,7 @@ export default function LoginPage() {
           ) : null}
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors font-medium"
+            className="w-full py-2 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 transition-colors font-medium"
           >
             Sign in
           </button>

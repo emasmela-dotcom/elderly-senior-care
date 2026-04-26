@@ -84,10 +84,10 @@ export default function NewMedicationPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-lg">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Add medication</h1>
-      <form onSubmit={onSubmit} className="space-y-4 bg-white border border-gray-200 p-6">
+      <h1 className="text-3xl font-bold text-garden-wood mb-6">Add medication</h1>
+      <form onSubmit={onSubmit} className="space-y-4 bg-white border border-garden-sage-200/65 p-6">
         <div>
-          <label htmlFor="resident_id" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="resident_id" className="block text-sm font-medium text-garden-wood mb-1">
             Resident
           </label>
           <select
@@ -95,7 +95,7 @@ export default function NewMedicationPage() {
             required
             value={resident_id}
             onChange={(e) => setResidentId(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           >
             <option value="">Select…</option>
             {residents.map((r) => (
@@ -106,7 +106,7 @@ export default function NewMedicationPage() {
           </select>
         </div>
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="name" className="block text-sm font-medium text-garden-wood mb-1">
             Medication name
           </label>
           <input
@@ -114,44 +114,44 @@ export default function NewMedicationPage() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="dosage" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="dosage" className="block text-sm font-medium text-garden-wood mb-1">
             Dosage
           </label>
           <input
             id="dosage"
             value={dosage}
             onChange={(e) => setDosage(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="frequency" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="frequency" className="block text-sm font-medium text-garden-wood mb-1">
             Frequency
           </label>
           <input
             id="frequency"
             value={frequency}
             onChange={(e) => setFrequency(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="times" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="times" className="block text-sm font-medium text-garden-wood mb-1">
             Times (comma-separated)
           </label>
           <input
             id="times"
             value={times}
             onChange={(e) => setTimes(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="pill" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="pill" className="block text-sm font-medium text-garden-wood mb-1">
             Pill photo (optional, stored in database — use only with consent)
           </label>
           <input
@@ -159,11 +159,11 @@ export default function NewMedicationPage() {
             type="file"
             accept="image/*"
             onChange={onFile}
-            className="w-full text-sm text-gray-900"
+            className="w-full text-sm text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="notes" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="notes" className="block text-sm font-medium text-garden-wood mb-1">
             Notes
           </label>
           <textarea
@@ -171,7 +171,7 @@ export default function NewMedicationPage() {
             rows={3}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         {error ? (
@@ -183,11 +183,11 @@ export default function NewMedicationPage() {
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 disabled:opacity-60"
+            className="px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 disabled:opacity-60"
           >
             {saving ? 'Saving…' : 'Save'}
           </button>
-          <Link href="/medications" className="px-4 py-2 border border-gray-300 text-gray-900 hover:bg-gray-50">
+          <Link href="/medications" className="px-4 py-2 border border-garden-clay-200/85 text-garden-wood hover:bg-garden-sage-50/70">
             Cancel
           </Link>
         </div>

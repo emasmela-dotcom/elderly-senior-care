@@ -45,10 +45,10 @@ export default function NewCaregiverPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-lg">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Add caregiver</h1>
-      <form onSubmit={onSubmit} className="space-y-4 bg-white border border-gray-200 p-6">
+      <h1 className="text-3xl font-bold text-garden-wood mb-6">Add caregiver</h1>
+      <form onSubmit={onSubmit} className="space-y-4 bg-white border border-garden-sage-200/65 p-6">
         <div>
-          <label htmlFor="full_name" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="full_name" className="block text-sm font-medium text-garden-wood mb-1">
             Full name
           </label>
           <input
@@ -56,22 +56,22 @@ export default function NewCaregiverPage() {
             required
             value={full_name}
             onChange={(e) => setFullName(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="role_name" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="role_name" className="block text-sm font-medium text-garden-wood mb-1">
             Role
           </label>
           <input
             id="role_name"
             value={role_name}
             onChange={(e) => setRoleName(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="email" className="block text-sm font-medium text-garden-wood mb-1">
             Email
           </label>
           <input
@@ -79,11 +79,11 @@ export default function NewCaregiverPage() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="notes" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="notes" className="block text-sm font-medium text-garden-wood mb-1">
             Notes
           </label>
           <textarea
@@ -91,7 +91,7 @@ export default function NewCaregiverPage() {
             rows={3}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         {error ? (
@@ -103,11 +103,11 @@ export default function NewCaregiverPage() {
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 bg-blue-600 text-white border border-blue-700 disabled:opacity-60"
+            className="px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 disabled:opacity-60"
           >
             {saving ? 'Saving…' : 'Save'}
           </button>
-          <Link href="/caregivers" className="px-4 py-2 border border-gray-300 text-gray-900 hover:bg-gray-50">
+          <Link href="/caregivers" className="px-4 py-2 border border-garden-clay-200/85 text-garden-wood hover:bg-garden-sage-50/70">
             Cancel
           </Link>
         </div>

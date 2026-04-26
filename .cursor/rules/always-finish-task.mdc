@@ -1,0 +1,18 @@
+# Always Finish In One Pass
+
+When the user asks for implementation, execute the full task end-to-end in the same turn whenever possible.
+
+## Required behavior
+- Do not stop at analysis or partial progress.
+- Do not ask repeated confirmation for obvious next steps.
+- Continue through: context -> edits -> verification -> final result.
+- If additional related fixes are clearly needed for the same request, complete them in the same pass.
+- Only pause when truly blocked by missing required info or explicit user limits.
+
+## Verification before handoff
+- Run the relevant checks for edited files (lint/build/tests when applicable).
+- Fix introduced issues before claiming completion.
+
+## Completion
+- Return one final handoff describing what changed and why it resolves the request.
+- Do not claim done while in-scope work remains.

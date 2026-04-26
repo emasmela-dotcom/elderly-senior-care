@@ -2,9 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Warm paper + very subtle botanical grain (no external assets) */
 body {
-  color: #1a1a1a;
-  background: #ffffff;
+  color: theme('colors.garden.wood');
+  background-color: theme('colors.garden.cream');
+  background-image:
+    radial-gradient(ellipse 140% 90% at 0% -10%, rgba(168, 194, 157, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 70% at 100% 110%, rgba(224, 204, 188, 0.35) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.45) 0%, transparent 42%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(85, 112, 73, 0.03) 0px,
+      rgba(85, 112, 73, 0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  background-attachment: fixed;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-fraunces), Georgia, ui-serif, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .garden-surface {
+    @apply rounded-garden border border-garden-sage-200/70 bg-white/85 shadow-garden backdrop-blur-[2px];
+  }
+
+  .garden-surface-muted {
+    @apply rounded-garden border border-garden-clay-200/60 bg-garden-cream-deep/80 shadow-garden backdrop-blur-sm;
+  }
+
+  .garden-btn {
+    @apply inline-flex items-center justify-center rounded-garden border border-garden-sage-700 bg-garden-sage-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-garden-sage-700 focus:outline-none focus:ring-2 focus:ring-garden-sage-500 focus:ring-offset-2 focus:ring-offset-garden-cream;
+  }
+
+  .garden-btn-outline {
+    @apply inline-flex items-center justify-center rounded-garden border border-garden-clay-300 bg-white/70 px-4 py-2 text-sm font-medium text-garden-wood shadow-sm transition-colors hover:border-garden-sage-400 hover:bg-garden-sage-50/90 focus:outline-none focus:ring-2 focus:ring-garden-sage-400 focus:ring-offset-2 focus:ring-offset-garden-cream;
+  }
+
+  .garden-field {
+    @apply w-full rounded-garden border border-garden-clay-200/90 bg-white/90 px-3 py-2 text-garden-wood placeholder:text-garden-wood/45 shadow-garden-inner focus:border-garden-sage-500 focus:ring-2 focus:ring-garden-sage-300/60;
+  }
 }
 
 @layer utilities {
@@ -12,4 +57,3 @@ body {
     text-wrap: balance;
   }
 }
-

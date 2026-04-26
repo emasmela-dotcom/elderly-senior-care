@@ -70,17 +70,17 @@ export default function NewAppointmentPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-lg">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Schedule appointment</h1>
-      <form onSubmit={onSubmit} className="space-y-4 bg-white border border-gray-200 p-6">
+      <h1 className="text-3xl font-bold text-garden-wood mb-6">Schedule appointment</h1>
+      <form onSubmit={onSubmit} className="space-y-4 bg-white border border-garden-sage-200/65 p-6">
         <div>
-          <label htmlFor="resident_id" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="resident_id" className="block text-sm font-medium text-garden-wood mb-1">
             Resident (optional)
           </label>
           <select
             id="resident_id"
             value={resident_id}
             onChange={(e) => setResidentId(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           >
             <option value="">—</option>
             {residents.map((r) => (
@@ -91,29 +91,29 @@ export default function NewAppointmentPage() {
           </select>
         </div>
         <div>
-          <label htmlFor="type" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="type" className="block text-sm font-medium text-garden-wood mb-1">
             Type
           </label>
           <input
             id="type"
             value={type}
             onChange={(e) => setType(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="doctor_name" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="doctor_name" className="block text-sm font-medium text-garden-wood mb-1">
             Doctor name
           </label>
           <input
             id="doctor_name"
             value={doctor_name}
             onChange={(e) => setDoctorName(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="date" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="date" className="block text-sm font-medium text-garden-wood mb-1">
             Date
           </label>
           <input
@@ -122,11 +122,11 @@ export default function NewAppointmentPage() {
             required
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="time" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="time" className="block text-sm font-medium text-garden-wood mb-1">
             Time
           </label>
           <input
@@ -134,22 +134,22 @@ export default function NewAppointmentPage() {
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="location" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="location" className="block text-sm font-medium text-garden-wood mb-1">
             Location
           </label>
           <input
             id="location"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         <div>
-          <label htmlFor="notes" className="block text-sm font-medium text-gray-900 mb-1">
+          <label htmlFor="notes" className="block text-sm font-medium text-garden-wood mb-1">
             Notes
           </label>
           <textarea
@@ -157,7 +157,7 @@ export default function NewAppointmentPage() {
             rows={3}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full border border-gray-300 px-3 py-2 text-gray-900"
+            className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood"
           />
         </div>
         {error ? (
@@ -169,11 +169,11 @@ export default function NewAppointmentPage() {
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 bg-blue-600 text-white border border-blue-700 disabled:opacity-60"
+            className="px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 disabled:opacity-60"
           >
             {saving ? 'Saving…' : 'Save'}
           </button>
-          <Link href="/appointments" className="px-4 py-2 border border-gray-300 text-gray-900 hover:bg-gray-50">
+          <Link href="/appointments" className="px-4 py-2 border border-garden-clay-200/85 text-garden-wood hover:bg-garden-sage-50/70">
             Cancel
           </Link>
         </div>

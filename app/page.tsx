@@ -1,7 +1,25 @@
 import Link from 'next/link'
-import { Users, Calendar, FileText, Activity, Heart, Shield, Share2, Smartphone, Pill, Activity as ActivityIcon, ClipboardList } from 'lucide-react'
+import {
+  Users,
+  Calendar,
+  FileText,
+  Activity,
+  Heart,
+  Shield,
+  Share2,
+  Smartphone,
+  Pill,
+  Activity as ActivityIcon,
+  ClipboardList,
+} from 'lucide-react'
+import { WatercolorLeaves } from '@/components/WatercolorLeaves'
 
 export default function Home() {
+  const userName = ''
+  const hour = new Date().getHours()
+  const greetingPrefix = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
+  const greeting = userName.trim() ? `${greetingPrefix}, ${userName.trim()}` : greetingPrefix
+
   const features = [
     {
       icon: Users,
@@ -77,86 +95,109 @@ export default function Home() {
     },
   ]
 
+  const stats = [
+    {
+      value: 0,
+      label: 'Active Residents',
+      emptyText: 'No residents added yet - tap to add your first one.',
+      href: '/residents/new',
+    },
+    {
+      value: 0,
+      label: 'Caregivers',
+      emptyText: 'No caregivers added yet - tap to add your first one.',
+      href: '/caregivers/new',
+    },
+    {
+      value: 0,
+      label: "Today's Appointments",
+      emptyText: 'No appointments today - tap to schedule one.',
+      href: '/appointments/new',
+    },
+    {
+      value: 0,
+      label: 'Pending Tasks',
+      emptyText: 'No tasks pending right now - check schedules to plan today.',
+      href: '/schedules',
+    },
+  ]
+
+  const appointmentsToday = stats.find((stat) => stat.label === "Today's Appointments")?.value ?? 0
+  const pendingTasks = stats.find((stat) => stat.label === 'Pending Tasks')?.value ?? 0
+  const todayAtAGlance =
+    appointmentsToday === 0 && pendingTasks === 0
+      ? 'Today at a glance: You have no appointments or pending care tasks scheduled today.'
+      : `Today at a glance: You have ${pendingTasks} pending ${pendingTasks === 1 ? 'task' : 'tasks'} and ${appointmentsToday} ${appointmentsToday === 1 ? 'appointment' : 'appointments'} today.`
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Hero Section */}
-      <div className="text-center mb-12">
-        <h1 className="text-5xl font-bold text-gray-900 mb-4">
+    <div className="relative container mx-auto px-4 py-10 md:py-14">
+      <section className="relative mx-auto mb-14 max-w-3xl text-center">
+        <WatercolorLeaves />
+        <p className="font-display text-sm font-medium uppercase tracking-[0.2em] text-garden-sage-600">
+          Garden & nature
+        </p>
+        <h1 className="font-display mt-3 text-4xl font-semibold leading-tight text-garden-sage-900 md:text-5xl">
           CareConnect 24/7
         </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Comprehensive 24/7 care management platform for elderly and senior care.
+        <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-garden-wood/80">
+          A calm place for care—like a quiet Sunday morning. Gentle tools for medications, visits, and the people you
+          look after.
         </p>
+        <div className="mx-auto mt-8 h-px max-w-xs bg-gradient-to-r from-transparent via-garden-clay-300/80 to-transparent" />
+      </section>
+
+      <section className="garden-surface-muted mb-10 p-6 md:p-7">
+        <h2 className="font-display text-2xl font-semibold text-garden-sage-900">{greeting}</h2>
+        <p className="mt-2 text-base leading-relaxed text-garden-wood/80">{todayAtAGlance}</p>
+      </section>
+
+      <div className="mb-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {stats.map((s) => (
+          <Link
+            key={s.label}
+            href={s.href}
+            className="garden-surface relative overflow-hidden px-5 py-6 text-center"
+          >
+            <div className="font-display text-3xl font-semibold text-garden-sage-700">{s.value}</div>
+            <div className="mt-1 text-sm text-garden-wood/70">{s.label}</div>
+            {s.value === 0 ? <p className="mt-3 text-sm leading-relaxed text-garden-wood/75">{s.emptyText}</p> : null}
+          </Link>
+        ))}
       </div>
 
-      {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-        <div className="bg-white border border-gray-200 p-6 text-center">
-          <div className="text-3xl font-bold text-gray-900 mb-2">0</div>
-          <div className="text-gray-600">Active Residents</div>
-        </div>
-        <div className="bg-white border border-gray-200 p-6 text-center">
-          <div className="text-3xl font-bold text-gray-900 mb-2">0</div>
-          <div className="text-gray-600">Caregivers</div>
-        </div>
-        <div className="bg-white border border-gray-200 p-6 text-center">
-          <div className="text-3xl font-bold text-gray-900 mb-2">0</div>
-          <div className="text-gray-600">Today&apos;s Appointments</div>
-        </div>
-        <div className="bg-white border border-gray-200 p-6 text-center">
-          <div className="text-3xl font-bold text-gray-900 mb-2">0</div>
-          <div className="text-gray-600">Pending Tasks</div>
-        </div>
-      </div>
-
-      {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {features.map((feature) => {
           const Icon = feature.icon
           return (
             <Link
               key={feature.title}
               href={feature.href}
-              className="bg-white border border-gray-200 p-6 hover:border-blue-600 transition-colors"
+              className="garden-surface group relative overflow-hidden p-6 transition-shadow hover:shadow-md"
             >
-              <div className="w-12 h-12 border border-gray-300 flex items-center justify-center mb-4">
-                <Icon className="text-gray-700" size={24} />
+              <div className="mb-4 inline-flex rounded-2xl border border-garden-sage-200/80 bg-garden-sage-50/80 p-3 text-garden-sage-700 shadow-inner">
+                <Icon className="h-6 w-6" aria-hidden />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <h3 className="font-display text-xl font-semibold text-garden-sage-900">{feature.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-garden-wood/75">{feature.description}</p>
             </Link>
           )
         })}
       </div>
 
-      {/* Quick Actions */}
-      <div className="mt-12 bg-white border border-gray-200 p-6">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="flex flex-wrap gap-4">
-          <Link
-            href="/caregiver-mobile"
-            className="px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
-          >
+      <div className="garden-surface-muted relative mt-14 overflow-hidden p-6 md:p-8">
+        <WatercolorLeaves />
+        <h2 className="font-display relative text-2xl font-semibold text-garden-sage-900">Quick actions</h2>
+        <div className="relative mt-5 flex flex-wrap gap-3">
+          <Link href="/caregiver-mobile" className="garden-btn">
             Mobile Caregiver View
           </Link>
-          <Link
-            href="/family"
-            className="px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
-          >
+          <Link href="/family" className="garden-btn">
             Family Sharing
           </Link>
-          <Link
-            href="/residents/new"
-            className="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
-          >
+          <Link href="/residents/new" className="garden-btn-outline">
             Add New Resident
           </Link>
-          <Link
-            href="/schedules/new"
-            className="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
-          >
+          <Link href="/schedules/new" className="garden-btn-outline">
             Create Schedule
           </Link>
         </div>
@@ -164,4 +205,3 @@ export default function Home() {
     </div>
   )
 }
-

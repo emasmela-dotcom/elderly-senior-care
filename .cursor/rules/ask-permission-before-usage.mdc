@@ -1,0 +1,23 @@
+# Ask Permission Before Usage Actions
+
+Before any action that can consume usage, quota, credits, billing, or paid API calls, ask the user for explicit approval first.
+
+## Usage-consuming actions (approval required)
+- Web search or URL fetch tools.
+- External API calls or remote MCP tools that can consume quota.
+- Browser automation sessions that may consume metered usage.
+- Any paid model/tool invocation beyond local file and local shell work.
+
+## No-usage local work (no extra approval needed)
+- Reading/editing local files in the workspace.
+- Local searches (`rg`, glob) and local lint/build/test runs.
+- Local git inspection commands.
+
+## Approval format
+- Ask a clear yes/no question before usage actions.
+- Name the exact tool/action and why it is needed.
+- If denied, continue with no-usage local alternatives.
+
+## Completion behavior
+- Do not run usage actions on assumptions.
+- If usage is required to unblock, stop and wait for user approval.

@@ -4,8 +4,8 @@
   "description": "24/7 comprehensive care management platform for elderly and senior care",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0ea5e9",
+  "background_color": "#F4EFE6",
+  "theme_color": "#557049",
   "orientation": "portrait-primary",
   "icons": [
     {

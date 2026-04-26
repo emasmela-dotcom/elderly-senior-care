@@ -72,14 +72,14 @@ export default function AppointmentsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Appointment Management</h1>
-          <p className="text-gray-600 mt-1">Manage doctor visits with prep checklists and reminders</p>
+          <h1 className="text-3xl font-bold text-garden-wood">Appointment Management</h1>
+          <p className="text-garden-wood/75 mt-1">Manage doctor visits with prep checklists and reminders</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <DownloadJsonButton filename="appointments.json" data={{ appointments }} />
           <Link
             href="/appointments/new"
-            className="flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
+            className="flex items-center px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 transition-colors"
           >
             <Plus size={20} className="mr-2" />
             Schedule Appointment
@@ -88,13 +88,13 @@ export default function AppointmentsPage() {
       </div>
 
       {appointments.length === 0 ? (
-        <div className="bg-white border border-gray-200 p-12 text-center">
-          <Calendar className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No appointments scheduled</h3>
-          <p className="text-gray-600 mb-4">Schedule appointments and create prep checklists.</p>
+        <div className="bg-white border border-garden-sage-200/65 p-12 text-center">
+          <Calendar className="mx-auto h-12 w-12 text-garden-wood/45 mb-4" />
+          <h3 className="text-lg font-medium text-garden-wood mb-2">No appointments scheduled</h3>
+          <p className="text-garden-wood/75 mb-4">Schedule appointments and create prep checklists.</p>
           <Link
             href="/appointments/new"
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 transition-colors"
           >
             <Plus size={20} className="mr-2" />
             Schedule Appointment
@@ -104,18 +104,18 @@ export default function AppointmentsPage() {
         <>
           {upcoming.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Upcoming Appointments</h2>
+              <h2 className="text-xl font-semibold text-garden-wood mb-4">Upcoming Appointments</h2>
               <div className="space-y-4">
                 {upcoming.map((apt) => (
-                  <div key={apt.id} className="bg-white border border-gray-200 p-6">
+                  <div key={apt.id} className="bg-white border border-garden-sage-200/65 p-6">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-xl font-semibold text-gray-900">{apt.type}</h3>
-                          <span className="text-sm text-gray-600">with {apt.doctorName}</span>
+                          <h3 className="text-xl font-semibold text-garden-wood">{apt.type}</h3>
+                          <span className="text-sm text-garden-wood/75">with {apt.doctorName}</span>
                         </div>
-                        <p className="text-lg font-medium text-gray-900 mb-1">{apt.residentName}</p>
-                        <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
+                        <p className="text-lg font-medium text-garden-wood mb-1">{apt.residentName}</p>
+                        <div className="flex flex-wrap gap-4 text-sm text-garden-wood/75 mb-4">
                           <div className="flex items-center">
                             <Calendar size={16} className="mr-1" />
                             <span>{format(new Date(apt.date), 'MMMM d, yyyy')}</span>
@@ -132,8 +132,8 @@ export default function AppointmentsPage() {
                           )}
                         </div>
                         {apt.checklist && apt.checklist.length > 0 && (
-                          <div className="border-t border-gray-200 pt-4">
-                            <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center">
+                          <div className="border-t border-garden-sage-200/65 pt-4">
+                            <h4 className="text-sm font-semibold text-garden-wood mb-3 flex items-center">
                               <FileText size={16} className="mr-2" />
                               Preparation Checklist
                             </h4>
@@ -143,12 +143,12 @@ export default function AppointmentsPage() {
                                   <CheckCircle2
                                     size={18}
                                     className={`mr-2 ${
-                                      item.completed ? 'text-gray-700' : 'text-gray-300'
+                                      item.completed ? 'text-garden-wood/80' : 'text-garden-sage-300'
                                     }`}
                                   />
                                   <span
                                     className={`text-sm ${
-                                      item.completed ? 'text-gray-600 line-through' : 'text-gray-900'
+                                      item.completed ? 'text-garden-wood/75 line-through' : 'text-garden-wood'
                                     }`}
                                   >
                                     {item.text}
@@ -159,8 +159,8 @@ export default function AppointmentsPage() {
                           </div>
                         )}
                         {apt.notes && (
-                          <div className="mt-4 pt-4 border-t border-gray-200">
-                            <p className="text-sm text-gray-600">{apt.notes}</p>
+                          <div className="mt-4 pt-4 border-t border-garden-sage-200/65">
+                            <p className="text-sm text-garden-wood/75">{apt.notes}</p>
                           </div>
                         )}
                       </div>
@@ -173,15 +173,15 @@ export default function AppointmentsPage() {
 
           {past.length > 0 && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Past Appointments</h2>
+              <h2 className="text-xl font-semibold text-garden-wood mb-4">Past Appointments</h2>
               <div className="space-y-4">
                 {past.map((apt) => (
-                  <div key={apt.id} className="bg-white border border-gray-200 p-6 opacity-75">
+                  <div key={apt.id} className="bg-white border border-garden-sage-200/65 p-6 opacity-75">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">{apt.type}</h3>
-                        <p className="text-sm text-gray-600">{apt.residentName} • {apt.doctorName}</p>
-                        <p className="text-sm text-gray-500 mt-1">
+                        <h3 className="text-lg font-semibold text-garden-wood">{apt.type}</h3>
+                        <p className="text-sm text-garden-wood/75">{apt.residentName} • {apt.doctorName}</p>
+                        <p className="text-sm text-garden-wood/60 mt-1">
                           {format(new Date(apt.date), 'MMMM d, yyyy')} at {apt.time}
                         </p>
                       </div>

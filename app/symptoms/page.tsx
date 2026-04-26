@@ -58,8 +58,8 @@ export default function SymptomsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Symptom Logging</h1>
-          <p className="text-gray-600 mt-1">Track daily health notes and symptoms for doctor visits</p>
+          <h1 className="text-3xl font-bold text-garden-wood">Symptom Logging</h1>
+          <p className="text-garden-wood/75 mt-1">Track daily health notes and symptoms for doctor visits</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <DownloadJsonButton
@@ -68,7 +68,7 @@ export default function SymptomsPage() {
           />
           <Link
             href="/symptoms/new"
-            className="flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
+            className="flex items-center px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 transition-colors"
           >
             <Plus size={20} className="mr-2" aria-hidden />
             Log Symptoms
@@ -83,12 +83,12 @@ export default function SymptomsPage() {
       ) : null}
 
       {loading ? (
-        <p className="text-gray-600">Loading…</p>
+        <p className="text-garden-wood/75">Loading…</p>
       ) : (
         <>
           {symptoms.length > 0 ? (
-            <div className="bg-white border border-gray-200 p-4 mb-6">
-              <label htmlFor="symptom-filter-date" className="block text-sm font-medium text-gray-900 mb-2">
+            <div className="bg-white border border-garden-sage-200/65 p-4 mb-6">
+              <label htmlFor="symptom-filter-date" className="block text-sm font-medium text-garden-wood mb-2">
                 Filter by Date
               </label>
               <input
@@ -96,27 +96,27 @@ export default function SymptomsPage() {
                 type="date"
                 value={filterDate}
                 onChange={(e) => setFilterDate(e.target.value)}
-                className="px-3 py-2 border border-gray-300 text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600"
+                className="px-3 py-2 border border-garden-clay-200/85 text-garden-wood focus:ring-2 focus:ring-garden-sage-500 focus:border-garden-sage-600"
               />
             </div>
           ) : null}
 
           {filteredSymptoms.length === 0 ? (
-            <div className="bg-white border border-gray-200 p-12 text-center">
-              <FileText className="mx-auto h-12 w-12 text-gray-400 mb-4" aria-hidden />
-              <h2 className="text-lg font-medium text-gray-900 mb-2">
+            <div className="bg-white border border-garden-sage-200/65 p-12 text-center">
+              <FileText className="mx-auto h-12 w-12 text-garden-wood/45 mb-4" aria-hidden />
+              <h2 className="text-lg font-medium text-garden-wood mb-2">
                 {symptoms.length === 0
                   ? 'No symptoms logged yet'
                   : 'No symptoms found for selected date'}
               </h2>
-              <p className="text-gray-600 mb-4">
+              <p className="text-garden-wood/75 mb-4">
                 {symptoms.length === 0
                   ? 'Start logging symptoms to track health patterns and prepare for doctor visits.'
                   : 'Try selecting a different date or log new symptoms.'}
               </p>
               <Link
                 href="/symptoms/new"
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center px-4 py-2 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 transition-colors"
               >
                 <Plus size={20} className="mr-2" aria-hidden />
                 Log Symptoms
@@ -125,24 +125,24 @@ export default function SymptomsPage() {
           ) : (
             <div className="space-y-4">
               {filteredSymptoms.map((symptom) => (
-                <div key={symptom.id} className="bg-white border border-gray-200 p-6">
+                <div key={symptom.id} className="bg-white border border-garden-sage-200/65 p-6">
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-xl font-semibold text-gray-900">{symptom.residentName}</h3>
+                        <h3 className="text-xl font-semibold text-garden-wood">{symptom.residentName}</h3>
                         <span
                           className={`px-2 py-1 text-xs font-medium border ${
                             symptom.severity === 'severe'
-                              ? 'border-gray-900 bg-gray-100 text-gray-900'
+                              ? 'border-garden-clay-600 bg-garden-clay-100 text-garden-wood'
                               : symptom.severity === 'moderate'
-                                ? 'border-gray-600 bg-gray-50 text-gray-700'
-                                : 'border-gray-300 bg-white text-gray-600'
+                                ? 'border-garden-sage-400 bg-garden-sage-50/70 text-garden-wood/80'
+                                : 'border-garden-clay-200/85 bg-white text-garden-wood/75'
                           }`}
                         >
                           {symptom.severity}
                         </span>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                      <div className="flex items-center gap-4 text-sm text-garden-wood/75 mb-3">
                         <div className="flex items-center">
                           <Calendar size={16} className="mr-1 shrink-0" aria-hidden />
                           <span>
@@ -151,23 +151,23 @@ export default function SymptomsPage() {
                         </div>
                         {symptom.duration ? <span>Duration: {symptom.duration}</span> : null}
                       </div>
-                      <div className="border-t border-gray-200 pt-4">
-                        <h4 className="text-sm font-semibold text-gray-900 mb-2">Symptoms</h4>
-                        <p className="text-gray-700 mb-3">{symptom.symptoms}</p>
+                      <div className="border-t border-garden-sage-200/65 pt-4">
+                        <h4 className="text-sm font-semibold text-garden-wood mb-2">Symptoms</h4>
+                        <p className="text-garden-wood/80 mb-3">{symptom.symptoms}</p>
                         {symptom.triggers ? (
                           <>
-                            <h4 className="text-sm font-semibold text-gray-900 mb-2">Possible Triggers</h4>
-                            <p className="text-gray-700 mb-3">{symptom.triggers}</p>
+                            <h4 className="text-sm font-semibold text-garden-wood mb-2">Possible Triggers</h4>
+                            <p className="text-garden-wood/80 mb-3">{symptom.triggers}</p>
                           </>
                         ) : null}
                         {symptom.notes ? (
                           <>
-                            <h4 className="text-sm font-semibold text-gray-900 mb-2">Additional Notes</h4>
-                            <p className="text-gray-700">{symptom.notes}</p>
+                            <h4 className="text-sm font-semibold text-garden-wood mb-2">Additional Notes</h4>
+                            <p className="text-garden-wood/80">{symptom.notes}</p>
                           </>
                         ) : null}
                       </div>
-                      <p className="text-sm text-gray-500 mt-4">
+                      <p className="text-sm text-garden-wood/60 mt-4">
                         Recorded by {symptom.recordedBy || '—'}
                       </p>
                     </div>
