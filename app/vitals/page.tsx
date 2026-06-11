@@ -127,21 +127,21 @@ export default function VitalsPage() {
               <div className="h-72 w-full" role="img" aria-label="Blood pressure line chart">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={chartRows} margin={{ top: 8, right: 16, left: 0, bottom: 8 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#C8D9C0" />
-                    <XAxis dataKey="idx" tick={{ fill: '#445A3C' }} />
-                    <YAxis tick={{ fill: '#445A3C' }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#A1D7D9" />
+                    <XAxis dataKey="idx" tick={{ fill: '#1A1A2E' }} />
+                    <YAxis tick={{ fill: '#1A1A2E' }} />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: 'rgba(255,255,255,0.95)',
-                        border: '1px solid #C8D9C0',
+                        border: '1px solid #A1D7D9',
                       }}
                       labelFormatter={(_, p) =>
                         p?.[0]?.payload?.label != null ? String(p[0].payload.label) : ''
                       }
                     />
                     <Legend />
-                    <Line type="monotone" dataKey="systolic" name="Systolic" stroke="#557049" strokeWidth={2} dot />
-                    <Line type="monotone" dataKey="diastolic" name="Diastolic" stroke="#A37B66" strokeWidth={2} dot />
+                    <Line type="monotone" dataKey="systolic" name="Systolic" stroke="#0D7377" strokeWidth={2} dot />
+                    <Line type="monotone" dataKey="diastolic" name="Diastolic" stroke="#5FB4C9" strokeWidth={2} dot />
                   </LineChart>
                 </ResponsiveContainer>
               </div>

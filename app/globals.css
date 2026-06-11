@@ -2,21 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Warm paper + very subtle botanical grain (no external assets) */
 body {
-  color: theme('colors.garden.wood');
-  background-color: theme('colors.garden.cream');
+  color: theme('colors.care.text');
+  background-color: theme('colors.care.background');
   background-image:
-    radial-gradient(ellipse 140% 90% at 0% -10%, rgba(168, 194, 157, 0.22) 0%, transparent 55%),
-    radial-gradient(ellipse 100% 70% at 100% 110%, rgba(224, 204, 188, 0.35) 0%, transparent 50%),
-    radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.45) 0%, transparent 42%),
-    repeating-linear-gradient(
-      0deg,
-      rgba(85, 112, 73, 0.03) 0px,
-      rgba(85, 112, 73, 0.03) 1px,
-      transparent 1px,
-      transparent 3px
-    );
+    radial-gradient(ellipse 140% 90% at 0% -10%, rgba(95, 180, 201, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 70% at 100% 110%, rgba(13, 115, 119, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.55) 0%, transparent 42%);
   background-attachment: fixed;
 }
 
@@ -32,23 +24,27 @@ body {
 
 @layer components {
   .garden-surface {
-    @apply rounded-garden border border-garden-sage-200/70 bg-white/85 shadow-garden backdrop-blur-[2px];
+    @apply rounded-garden border border-garden-sage-200/70 bg-white/90 shadow-garden backdrop-blur-[2px];
   }
 
   .garden-surface-muted {
-    @apply rounded-garden border border-garden-clay-200/60 bg-garden-cream-deep/80 shadow-garden backdrop-blur-sm;
+    @apply rounded-garden border border-garden-clay-200/70 bg-garden-cream-deep/90 shadow-garden backdrop-blur-sm;
   }
 
   .garden-btn {
-    @apply inline-flex items-center justify-center rounded-garden border border-garden-sage-700 bg-garden-sage-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-garden-sage-700 focus:outline-none focus:ring-2 focus:ring-garden-sage-500 focus:ring-offset-2 focus:ring-offset-garden-cream;
+    @apply inline-flex items-center justify-center rounded-garden border border-care-primary-dark bg-care-primary px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-care-primary-dark focus:outline-none focus:ring-2 focus:ring-care-secondary focus:ring-offset-2 focus:ring-offset-care-background;
   }
 
   .garden-btn-outline {
-    @apply inline-flex items-center justify-center rounded-garden border border-garden-clay-300 bg-white/70 px-4 py-2 text-sm font-medium text-garden-wood shadow-sm transition-colors hover:border-garden-sage-400 hover:bg-garden-sage-50/90 focus:outline-none focus:ring-2 focus:ring-garden-sage-400 focus:ring-offset-2 focus:ring-offset-garden-cream;
+    @apply inline-flex items-center justify-center rounded-garden border border-garden-clay-300 bg-white/80 px-4 py-2 text-sm font-medium text-care-text shadow-sm transition-colors hover:border-care-secondary hover:bg-care-hover focus:outline-none focus:ring-2 focus:ring-care-secondary focus:ring-offset-2 focus:ring-offset-care-background;
+  }
+
+  .garden-btn-accent {
+    @apply inline-flex items-center justify-center rounded-garden border border-[#c94a3d] bg-care-accent px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#d14a3c] focus:outline-none focus:ring-2 focus:ring-care-accent focus:ring-offset-2 focus:ring-offset-care-background;
   }
 
   .garden-field {
-    @apply w-full rounded-garden border border-garden-clay-200/90 bg-white/90 px-3 py-2 text-garden-wood placeholder:text-garden-wood/45 shadow-garden-inner focus:border-garden-sage-500 focus:ring-2 focus:ring-garden-sage-300/60;
+    @apply w-full rounded-garden border border-garden-clay-200/90 bg-white/95 px-3 py-2 text-care-text placeholder:text-care-muted shadow-garden-inner focus:border-care-primary focus:ring-2 focus:ring-care-secondary/50;
   }
 }
 

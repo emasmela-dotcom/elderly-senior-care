@@ -120,24 +120,24 @@ export default function Home() {
     <div className="relative container mx-auto px-4 py-10 md:py-14">
       <section className="relative mx-auto mb-10 max-w-3xl text-center">
         <WatercolorLeaves />
-        <h1 className="font-display text-4xl font-semibold leading-tight text-[#1a1a1a] md:text-5xl">
+        <h1 className="font-display text-4xl font-semibold leading-tight text-care-text md:text-5xl">
           CareConnect 24/7
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-[#1a1a1a]/80">
+        <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-care-muted">
           You&apos;re in charge. We just make it easier.
         </p>
-        <div className="mx-auto mt-6 h-px max-w-xs bg-gradient-to-r from-transparent via-[#c8b8a6] to-transparent" />
+        <div className="mx-auto mt-6 h-px max-w-xs bg-gradient-to-r from-transparent via-care-secondary to-transparent" />
       </section>
 
       <HomeOnboarding />
 
       <section className="garden-surface-muted mb-8 p-6 md:p-7">
-        <h2 className="font-display text-2xl font-semibold text-[#1a1a1a]">{greeting}</h2>
-        <p className="mt-2 text-base leading-relaxed text-[#1a1a1a]/80">{todayAtAGlance}</p>
+        <h2 className="font-display text-2xl font-semibold text-care-text">{greeting}</h2>
+        <p className="mt-2 text-base leading-relaxed text-care-muted">{todayAtAGlance}</p>
       </section>
 
       <section className="mb-10" aria-labelledby="today-actions-heading">
-        <h2 id="today-actions-heading" className="font-display mb-4 text-2xl font-semibold text-[#1a1a1a]">
+        <h2 id="today-actions-heading" className="font-display mb-4 text-2xl font-semibold text-care-text">
           What would you like to do today?
         </h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -149,12 +149,12 @@ export default function Home() {
                 href={action.href}
                 className="garden-surface flex min-h-[8.5rem] flex-col justify-between p-6 transition-shadow hover:shadow-md"
               >
-                <div className="inline-flex rounded-2xl border border-[#c8d9c0] bg-[#eef4f6] p-3 text-[#4A8FA8]">
+                <div className="inline-flex rounded-2xl border border-garden-sage-200 bg-care-hover p-3 text-care-primary">
                   <Icon className="h-6 w-6" aria-hidden />
                 </div>
                 <div className="mt-4">
-                  <h3 className="font-display text-xl font-semibold text-[#1a1a1a]">{action.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-[#1a1a1a]/75">{action.description}</p>
+                  <h3 className="font-display text-xl font-semibold text-care-text">{action.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-care-muted">{action.description}</p>
                 </div>
               </Link>
             )
@@ -170,17 +170,17 @@ export default function Home() {
             className="garden-surface relative overflow-hidden px-5 py-6 text-center"
           >
             {s.value > 0 ? (
-              <div className="font-display text-3xl font-semibold text-[#4A8FA8]">{s.value}</div>
+              <div className="font-display text-3xl font-semibold text-care-primary">{s.value}</div>
             ) : (
-              <p className="text-base font-medium leading-relaxed text-[#1a1a1a]/85">{s.emptyText}</p>
+              <p className="text-base font-medium leading-relaxed text-care-text/90">{s.emptyText}</p>
             )}
-            <div className="mt-2 text-sm font-medium text-[#1a1a1a]/70">{s.label}</div>
+            <div className="mt-2 text-sm font-medium text-care-muted">{s.label}</div>
           </Link>
         ))}
       </div>
 
       <section aria-labelledby="core-features-heading">
-        <h2 id="core-features-heading" className="font-display mb-4 text-2xl font-semibold text-[#1a1a1a]">
+        <h2 id="core-features-heading" className="font-display mb-4 text-2xl font-semibold text-care-text">
           Your everyday tools
         </h2>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -192,11 +192,11 @@ export default function Home() {
                 href={feature.href}
                 className="garden-surface group relative overflow-hidden p-6 transition-shadow hover:shadow-md"
               >
-                <div className="mb-4 inline-flex rounded-2xl border border-[#c8d9c0] bg-[#eef4f6] p-3 text-[#6B8F71]">
+                <div className="mb-4 inline-flex rounded-2xl border border-garden-clay-200 bg-care-hover p-3 text-care-secondary">
                   <Icon className="h-6 w-6" aria-hidden />
                 </div>
-                <h3 className="font-display text-xl font-semibold text-[#1a1a1a]">{feature.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#1a1a1a]/75">{feature.description}</p>
+                <h3 className="font-display text-xl font-semibold text-care-text">{feature.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-care-muted">{feature.description}</p>
               </Link>
             )
           })}

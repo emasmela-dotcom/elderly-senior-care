@@ -33,19 +33,19 @@ export function HomeOnboarding() {
 
   return (
     <section
-      className="garden-surface mb-10 border-[#4A8FA8]/25 p-6 md:p-8"
+      className="garden-surface mb-10 border-care-primary/25 p-6 md:p-8"
       aria-label="Getting started"
     >
-      <p className="text-sm font-medium uppercase tracking-wide text-[#4A8FA8]">
+      <p className="text-sm font-medium uppercase tracking-wide text-care-primary">
         Step {step} of 3
       </p>
 
       {step === 1 ? (
         <>
-          <h2 className="font-display mt-2 text-2xl font-semibold text-[#1a1a1a]">
+          <h2 className="font-display mt-2 text-2xl font-semibold text-care-text">
             Welcome — you&apos;re in charge
           </h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#1a1a1a]/80">
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-care-muted">
             CareConnect is your personal assistant for daily health and routines. We help you stay
             organized — simply and calmly.
           </p>
@@ -58,24 +58,24 @@ export function HomeOnboarding() {
 
       {step === 2 ? (
         <>
-          <h2 className="font-display mt-2 text-2xl font-semibold text-[#1a1a1a]">
+          <h2 className="font-display mt-2 text-2xl font-semibold text-care-text">
             Start with what matters today
           </h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#1a1a1a]/80">
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-care-muted">
             Most people begin with medications, appointments, and the people they trust. You can
             explore everything else whenever you&apos;re ready.
           </p>
-          <ul className="mt-4 space-y-2 text-sm text-[#1a1a1a]/85">
+          <ul className="mt-4 space-y-2 text-sm text-care-text/90">
             <li className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#6B8F71]" aria-hidden />
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-care-success" aria-hidden />
               Medications and reminders
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#6B8F71]" aria-hidden />
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-care-success" aria-hidden />
               Appointments and schedule
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 shrink-0 text-[#6B8F71]" aria-hidden />
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-care-success" aria-hidden />
               My People — family and helpers you choose
             </li>
           </ul>
@@ -88,10 +88,10 @@ export function HomeOnboarding() {
 
       {step === 3 ? (
         <>
-          <h2 className="font-display mt-2 text-2xl font-semibold text-[#1a1a1a]">
+          <h2 className="font-display mt-2 text-2xl font-semibold text-care-text">
             Quick setup (about 2 minutes)
           </h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-[#1a1a1a]/80">
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-care-muted">
             Pick one to begin. You can do the rest later.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -105,7 +105,11 @@ export function HomeOnboarding() {
               Invite someone you trust
             </Link>
           </div>
-          <button type="button" onClick={finish} className="mt-4 text-sm text-[#1a1a1a]/70 underline-offset-2 hover:underline">
+          <button
+            type="button"
+            onClick={finish}
+            className="mt-4 text-sm text-care-muted underline-offset-2 hover:underline"
+          >
             Skip for now
           </button>
         </>
