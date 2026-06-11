@@ -2,9 +2,9 @@ import type { Messages } from './en'
 
 export const es: Messages = {
   nav: {
-    dashboard: 'Panel',
+    dashboard: 'Inicio',
     residents: 'Residentes',
-    caregivers: 'Cuidadores',
+    caregivers: 'Mis ayudantes',
     medications: 'Medicamentos',
     vitals: 'Signos vitales',
     appointments: 'Citas',
@@ -12,7 +12,10 @@ export const es: Messages = {
     healthRecords: 'Historial de salud',
     activities: 'Actividades',
     safety: 'Seguridad',
-    family: 'Familia',
+    family: 'Mis personas',
+    myHealth: 'Mi salud',
+    myPeople: 'Mis personas',
+    schedule: 'Agenda',
     signOut: 'Cerrar sesión',
     language: 'Idioma',
   },

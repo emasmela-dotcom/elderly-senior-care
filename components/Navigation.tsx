@@ -5,36 +5,24 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import {
-  Home,
-  Users,
   Calendar,
   FileText,
-  Activity,
-  Heart,
-  Shield,
   Menu,
   X,
-  Share2,
+  Users,
   Pill,
-  Activity as ActivityIcon,
   ClipboardList,
 } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useI18n } from '@/components/I18nProvider'
 import type { NavKey } from '@/locales/en'
 
-const navigation: { key: NavKey; href: string; icon: typeof Home }[] = [
-  { key: 'dashboard', href: '/', icon: Home },
-  { key: 'residents', href: '/residents', icon: Users },
-  { key: 'caregivers', href: '/caregivers', icon: Heart },
+const navigation: { key: NavKey; href: string; icon: typeof Pill }[] = [
   { key: 'medications', href: '/medications', icon: Pill },
-  { key: 'vitals', href: '/vitals', icon: ActivityIcon },
   { key: 'appointments', href: '/appointments', icon: Calendar },
-  { key: 'symptoms', href: '/symptoms', icon: ClipboardList },
-  { key: 'healthRecords', href: '/health-records', icon: FileText },
-  { key: 'activities', href: '/activities', icon: Activity },
-  { key: 'safety', href: '/safety', icon: Shield },
-  { key: 'family', href: '/family', icon: Share2 },
+  { key: 'myHealth', href: '/health-records', icon: FileText },
+  { key: 'myPeople', href: '/family', icon: Users },
+  { key: 'schedule', href: '/schedules', icon: ClipboardList },
 ]
 
 export default function Navigation() {

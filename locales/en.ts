@@ -1,8 +1,8 @@
 export const en = {
   nav: {
-    dashboard: 'Dashboard',
+    dashboard: 'Home',
     residents: 'Residents',
-    caregivers: 'Caregivers',
+    caregivers: 'My Helpers',
     medications: 'Medications',
     vitals: 'Vital Signs',
     appointments: 'Appointments',
@@ -10,7 +10,10 @@ export const en = {
     healthRecords: 'Health Records',
     activities: 'Activities',
     safety: 'Safety',
-    family: 'Family Sharing',
+    family: 'My People',
+    myHealth: 'My Health',
+    myPeople: 'My People',
+    schedule: 'Schedule',
     signOut: 'Sign out',
     language: 'Language',
   },
