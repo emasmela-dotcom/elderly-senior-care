@@ -39,6 +39,10 @@ export async function GET() {
       medicationColumns = (cols as { column_name: string }[]).map((r) => r.column_name)
     }
 
+    const legacyMedications =
+      medicationColumns.includes('times') &&
+      !medicationColumns.includes('times_json')
+
     return NextResponse.json({
       ok: missing.length === 0,
       ping: ping[0],
@@ -46,10 +50,13 @@ export async function GET() {
       tables: tableNames,
       missingTables: missing,
       medicationColumns,
+      legacyMedications,
       hint:
         missing.length > 0
           ? 'Run db/schema.sql in Neon on the SAME branch as your DATABASE_URL connection string.'
-          : 'Schema looks complete.',
+          : legacyMedications
+            ? 'Legacy medications columns detected; app now supports times/photo_url automatically.'
+            : 'Schema looks complete.',
     })
   } catch (e) {
     return NextResponse.json(

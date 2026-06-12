@@ -3,6 +3,7 @@ import { getSql } from '@/lib/db'
 import { dbErrorResponse } from '@/lib/dbError'
 import { familyReadOnlyGuard, requireSession } from '@/lib/requireAuth'
 import { sendCareNotification } from '@/lib/notify'
+import { getMedicationColumnMap } from '@/lib/schemaCompat'
 
 export async function GET() {
   const auth = await requireSession()
@@ -11,13 +12,23 @@ export async function GET() {
   if (g) return g
   try {
     const sql = getSql()
-    const rows = await sql`
-      SELECT m.id, m.resident_id, m.name, m.dosage, m.frequency, m.times_json, m.photo_base64,
-             m.start_date, m.end_date, m.notes, m.created_at, r.full_name AS resident_name
-      FROM medications m
-      LEFT JOIN residents r ON r.id = m.resident_id
-      ORDER BY m.created_at DESC
-    `
+    const cols = await getMedicationColumnMap(sql)
+    const rows =
+      cols.times === 'times_json'
+        ? await sql`
+            SELECT m.id, m.resident_id, m.name, m.dosage, m.frequency, m.times_json, m.photo_base64,
+                   m.start_date, m.end_date, m.notes, m.created_at, r.full_name AS resident_name
+            FROM medications m
+            LEFT JOIN residents r ON r.id = m.resident_id
+            ORDER BY m.created_at DESC
+          `
+        : await sql`
+            SELECT m.id, m.resident_id, m.name, m.dosage, m.frequency, m.times AS times_json, m.photo_url AS photo_base64,
+                   m.start_date, m.end_date, m.notes, m.created_at, r.full_name AS resident_name
+            FROM medications m
+            LEFT JOIN residents r ON r.id = m.resident_id
+            ORDER BY m.created_at DESC
+          `
     const mapped = (rows as Record<string, unknown>[]).map((r) => ({
       id: r.id,
       residentId: r.resident_id,
@@ -43,7 +54,7 @@ function safeJsonArray(v: unknown): string[] {
     const p = JSON.parse(v)
     return Array.isArray(p) ? p.map(String) : []
   } catch {
-    return []
+    return v.includes(',') ? v.split(',').map((s) => s.trim()).filter(Boolean) : []
   }
 }
 
@@ -65,23 +76,36 @@ export async function POST(req: Request) {
     const dosage = body.dosage ? String(body.dosage) : ''
     const frequency = body.frequency ? String(body.frequency) : ''
     const times = Array.isArray(body.times) ? body.times.map(String) : []
-    const times_json = JSON.stringify(times)
-    const photo_base64 = body.photo_base64 ? String(body.photo_base64) : null
+    const timesValue = JSON.stringify(times)
+    const photoValue = body.photo_base64 ? String(body.photo_base64) : null
     const start_date = body.start_date ? String(body.start_date) : null
     const end_date = body.end_date ? String(body.end_date) : null
     const notes = body.notes ? String(body.notes) : null
     const sql = getSql()
-    const [row] = await sql`
-      INSERT INTO medications (resident_id, name, dosage, frequency, times_json, photo_base64, start_date, end_date, notes)
-      VALUES (${resident_id}::uuid, ${name}, ${dosage}, ${frequency}, ${times_json}, ${photo_base64}, ${start_date}, ${end_date}, ${notes})
-      RETURNING id, resident_id, name, dosage, frequency, times_json, photo_base64, start_date, end_date, notes, created_at
-    `
+    const cols = await getMedicationColumnMap(sql)
+
+    const [row] =
+      cols.times === 'times_json'
+        ? await sql`
+            INSERT INTO medications (resident_id, name, dosage, frequency, times_json, photo_base64, start_date, end_date, notes)
+            VALUES (${resident_id}::uuid, ${name}, ${dosage}, ${frequency}, ${timesValue}, ${photoValue}, ${start_date}, ${end_date}, ${notes})
+            RETURNING id, resident_id, name, dosage, frequency, times_json, photo_base64, start_date, end_date, notes, created_at
+          `
+        : await sql`
+            INSERT INTO medications (resident_id, name, dosage, frequency, times, photo_url, start_date, end_date, notes)
+            VALUES (${resident_id}::uuid, ${name}, ${dosage}, ${frequency}, ${timesValue}, ${photoValue}, ${start_date}, ${end_date}, ${notes})
+            RETURNING id, resident_id, name, dosage, frequency, times AS times_json, photo_url AS photo_base64, start_date, end_date, notes, created_at
+          `
+
     void sendCareNotification(
       `Medication added: ${name}`,
       `<p>A new medication was recorded for a resident.</p>`
     )
     return NextResponse.json(
-      { ...row, times: safeJsonArray((row as { times_json: string }).times_json) },
+      {
+        ...row,
+        times: safeJsonArray((row as { times_json: string }).times_json),
+      },
       { status: 201 }
     )
   } catch (e) {
