@@ -6,6 +6,7 @@ import { Plus, Search, Filter } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
 import { ExportCsvButton } from '@/components/ExportCsvButton'
 import { ExportResidentsPdfButton } from '@/components/ExportPdfButton'
+import { loadProtectedList } from '@/lib/loadProtectedList'
 
 type ResidentRow = {
   id: string
@@ -24,14 +25,9 @@ export default function ResidentsPage() {
     setLoading(true)
     setLoadError('')
     try {
-      const res = await fetch('/api/residents', { credentials: 'same-origin' })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setLoadError((data as { error?: string }).error || 'Could not load residents')
-        setResidents([])
-        return
-      }
-      setResidents(Array.isArray(data) ? data : [])
+      const { items, error } = await loadProtectedList<ResidentRow>('/api/residents')
+      setLoadError(error)
+      setResidents(items)
     } catch {
       setLoadError('Network error')
       setResidents([])

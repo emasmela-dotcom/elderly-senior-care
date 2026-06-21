@@ -15,6 +15,7 @@ export const en = {
     myPeople: 'My People',
     schedule: 'Schedule',
     signOut: 'Sign out',
+    signIn: 'Sign in',
     language: 'Language',
   },
   skip: 'Skip to main content',

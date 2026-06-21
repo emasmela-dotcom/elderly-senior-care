@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, FileText } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { loadProtectedList } from '@/lib/loadProtectedList'
 
 type Row = {
   id: string
@@ -22,14 +23,9 @@ export default function HealthRecordsPage() {
     setLoading(true)
     setLoadError('')
     try {
-      const res = await fetch('/api/health-records', { credentials: 'same-origin' })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setLoadError((data as { error?: string }).error || 'Could not load records')
-        setRecords([])
-        return
-      }
-      setRecords(Array.isArray(data) ? data : [])
+      const { items, error } = await loadProtectedList<Row>('/api/health-records')
+      setLoadError(error)
+      setRecords(items)
     } catch {
       setLoadError('Network error')
       setRecords([])

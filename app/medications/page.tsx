@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, Pill, Clock, Calendar, Image as ImageIcon } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { loadProtectedList } from '@/lib/loadProtectedList'
 
 interface Medication {
   id: string
@@ -28,14 +29,9 @@ export default function MedicationsPage() {
     setLoading(true)
     setLoadError('')
     try {
-      const res = await fetch('/api/medications', { credentials: 'same-origin' })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setLoadError((data as { error?: string }).error || 'Could not load medications')
-        setMedications([])
-        return
-      }
-      setMedications(Array.isArray(data) ? data : [])
+      const { items, error } = await loadProtectedList<Medication>('/api/medications')
+      setLoadError(error)
+      setMedications(items)
     } catch {
       setLoadError('Network error')
       setMedications([])

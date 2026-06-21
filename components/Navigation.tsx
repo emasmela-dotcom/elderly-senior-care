@@ -64,12 +64,16 @@ export default function Navigation() {
             {session ? (
               <button
                 type="button"
-                onClick={() => signOut({ callbackUrl: '/login' })}
+                onClick={() => signOut({ callbackUrl: '/' })}
                 className="garden-btn-outline px-3 py-2"
               >
                 {t.nav.signOut}
               </button>
-            ) : null}
+            ) : (
+              <Link href="/login" className="garden-btn-outline px-3 py-2">
+                {t.nav.signIn}
+              </Link>
+            )}
           </div>
 
           <button
@@ -156,11 +160,19 @@ export default function Navigation() {
                 <button
                   type="button"
                   className="mx-4 mt-2 garden-btn-outline text-left"
-                  onClick={() => signOut({ callbackUrl: '/login' })}
+                  onClick={() => signOut({ callbackUrl: '/' })}
                 >
                   {t.nav.signOut}
                 </button>
-              ) : null}
+              ) : (
+                <Link
+                  href="/login"
+                  className="mx-4 mt-2 garden-btn-outline inline-block text-left"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {t.nav.signIn}
+                </Link>
+              )}
             </div>
           </div>
         ) : null}

@@ -17,6 +17,7 @@ export const es: Messages = {
     myPeople: 'Mis personas',
     schedule: 'Agenda',
     signOut: 'Cerrar sesión',
+    signIn: 'Iniciar sesión',
     language: 'Idioma',
   },
   skip: 'Saltar al contenido principal',

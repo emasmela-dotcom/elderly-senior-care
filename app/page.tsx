@@ -131,6 +131,21 @@ export default function Home() {
 
       <HomeOnboarding />
 
+      {!session ? (
+        <div className="mb-8 rounded-garden border border-care-border bg-white/95 p-4 text-center">
+          <p className="text-base text-care-text">
+            You&apos;re browsing as a guest.{' '}
+            <Link
+              href="/login"
+              className="font-semibold text-care-primary underline underline-offset-2 hover:text-care-primary/90"
+            >
+              Sign in
+            </Link>{' '}
+            to save your medications, appointments, and calendar sync.
+          </p>
+        </div>
+      ) : null}
+
       <section className="garden-surface-muted mb-8 p-6 md:p-7">
         <h2 className="font-display text-2xl font-semibold text-care-text">{greeting}</h2>
         <p className="mt-2 text-base leading-relaxed text-care-muted">{todayAtAGlance}</p>

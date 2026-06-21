@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import { Providers } from './providers'
 import { SkipLink } from '@/components/SkipLink'
 import { GardenBackdrop } from '@/components/GardenBackdrop'
+import Footer from '@/components/Footer'
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -63,6 +64,7 @@ export default function RootLayout({
           >
             {children}
           </main>
+          <Footer />
         </Providers>
       </body>
     </html>

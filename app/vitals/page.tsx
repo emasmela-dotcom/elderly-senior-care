@@ -10,6 +10,7 @@ import {
   Droplet,
 } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { loadProtectedList } from '@/lib/loadProtectedList'
 import {
   LineChart,
   Line,
@@ -47,14 +48,9 @@ export default function VitalsPage() {
     setLoading(true)
     setLoadError('')
     try {
-      const res = await fetch('/api/vitals', { credentials: 'same-origin' })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setLoadError((data as { error?: string }).error || 'Could not load vitals')
-        setVitals([])
-        return
-      }
-      setVitals(Array.isArray(data) ? data : [])
+      const { items, error } = await loadProtectedList<VitalSign>('/api/vitals')
+      setLoadError(error)
+      setVitals(items)
     } catch {
       setLoadError('Network error')
       setVitals([])

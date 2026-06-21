@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, Activity } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { loadProtectedList } from '@/lib/loadProtectedList'
 
 type Row = { id: string; title: string; description: string | null; activity_date: string | null }
 
@@ -16,14 +17,9 @@ export default function ActivitiesPage() {
     setLoading(true)
     setLoadError('')
     try {
-      const res = await fetch('/api/activities', { credentials: 'same-origin' })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setLoadError((data as { error?: string }).error || 'Could not load activities')
-        setActivities([])
-        return
-      }
-      setActivities(Array.isArray(data) ? data : [])
+      const { items, error } = await loadProtectedList<Row>('/api/activities')
+      setLoadError(error)
+      setActivities(items)
     } catch {
       setLoadError('Network error')
       setActivities([])

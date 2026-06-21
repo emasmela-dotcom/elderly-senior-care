@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, FileText, Calendar } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { loadProtectedList } from '@/lib/loadProtectedList'
 import { format } from 'date-fns'
 
 interface SymptomLog {
@@ -30,14 +31,9 @@ export default function SymptomsPage() {
     setLoading(true)
     setLoadError('')
     try {
-      const res = await fetch('/api/symptoms', { credentials: 'same-origin' })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setLoadError((data as { error?: string }).error || 'Could not load symptoms')
-        setSymptoms([])
-        return
-      }
-      setSymptoms(Array.isArray(data) ? data : [])
+      const { items, error } = await loadProtectedList<SymptomLog>('/api/symptoms')
+      setLoadError(error)
+      setSymptoms(items)
     } catch {
       setLoadError('Network error')
       setSymptoms([])

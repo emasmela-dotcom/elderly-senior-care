@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, Calendar as CalendarIcon } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { loadProtectedList } from '@/lib/loadProtectedList'
 
 type Schedule = {
   id: string
@@ -23,14 +24,9 @@ export default function SchedulesPage() {
     setLoading(true)
     setLoadError('')
     try {
-      const res = await fetch('/api/schedules', { credentials: 'same-origin' })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setLoadError((data as { error?: string }).error || 'Could not load schedules')
-        setSchedules([])
-        return
-      }
-      setSchedules(Array.isArray(data) ? data : [])
+      const { items, error } = await loadProtectedList<Schedule>('/api/schedules')
+      setLoadError(error)
+      setSchedules(items)
     } catch {
       setLoadError('Network error')
       setSchedules([])

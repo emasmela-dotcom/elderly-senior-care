@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, Shield } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { loadProtectedList } from '@/lib/loadProtectedList'
 
 type Incident = {
   id: string
@@ -23,14 +24,9 @@ export default function SafetyPage() {
     setLoading(true)
     setLoadError('')
     try {
-      const res = await fetch('/api/incidents', { credentials: 'same-origin' })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setLoadError((data as { error?: string }).error || 'Could not load incidents')
-        setIncidents([])
-        return
-      }
-      setIncidents(Array.isArray(data) ? data : [])
+      const { items, error } = await loadProtectedList<Incident>('/api/incidents')
+      setLoadError(error)
+      setIncidents(items)
     } catch {
       setLoadError('Network error')
       setIncidents([])

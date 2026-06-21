@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, Search, Filter } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { loadProtectedList } from '@/lib/loadProtectedList'
 
 type Caregiver = {
   id: string
@@ -22,14 +23,9 @@ export default function CaregiversPage() {
     setLoading(true)
     setLoadError('')
     try {
-      const res = await fetch('/api/caregivers', { credentials: 'same-origin' })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        setLoadError((data as { error?: string }).error || 'Could not load caregivers')
-        setCaregivers([])
-        return
-      }
-      setCaregivers(Array.isArray(data) ? data : [])
+      const { items, error } = await loadProtectedList<Caregiver>('/api/caregivers')
+      setLoadError(error)
+      setCaregivers(items)
     } catch {
       setLoadError('Network error')
       setCaregivers([])
