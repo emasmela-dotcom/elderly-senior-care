@@ -35,8 +35,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           error:
-            'We could not send your message right now. Please email us directly.',
-          fallbackEmail: result.fallbackEmail,
+            'We could not send your message right now. Please try again in a few minutes.',
         },
         { status: 503 }
       )

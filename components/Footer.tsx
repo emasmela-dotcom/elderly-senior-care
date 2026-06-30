@@ -10,7 +10,7 @@ export default function Footer() {
             href="/support"
             className="font-medium text-care-primary underline underline-offset-2 hover:text-care-primary/90"
           >
-            Contact support
+            Support
           </Link>
         </p>
       </div>
