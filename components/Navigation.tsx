@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useI18n } from '@/components/I18nProvider'
+import { LargeTextToggle } from '@/components/LargeTextToggle'
 import type { NavKey } from '@/locales/en'
 
 const navigation: { key: NavKey; href: string; icon: typeof Pill }[] = [
@@ -49,6 +50,7 @@ export default function Navigation() {
           </Link>
 
           <div className="hidden lg:flex items-center justify-end gap-2">
+            <LargeTextToggle />
             <label className="ml-2 flex items-center gap-1 text-sm text-care-muted">
               <span className="sr-only">{t.nav.language}</span>
               <select
@@ -144,6 +146,7 @@ export default function Navigation() {
                 )
               })}
               <div className="px-4 pt-2">
+                <LargeTextToggle className="w-full justify-center mb-2" />
                 <label className="flex flex-col gap-1 text-sm text-care-muted">
                   {t.nav.language}
                   <select

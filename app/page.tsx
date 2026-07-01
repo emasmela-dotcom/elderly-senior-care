@@ -2,22 +2,73 @@
 
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
 import { Calendar, FileText, Pill, Users } from 'lucide-react'
 import { WatercolorLeaves } from '@/components/WatercolorLeaves'
 import { HomeOnboarding } from '@/components/HomeOnboarding'
+import { FirstStartFocus, dismissFirstStart, readFirstStartDismissed } from '@/components/FirstStartFocus'
 
 export default function Home() {
   const { data: session } = useSession()
   const userName = session?.user?.name ?? ''
+  const [medicationsCount, setMedicationsCount] = useState(0)
+  const [appointmentsToday, setAppointmentsToday] = useState(0)
+  const [appointmentsTotal, setAppointmentsTotal] = useState(0)
+  const [peopleCount, setPeopleCount] = useState(0)
+  const [scheduleItems, setScheduleItems] = useState(0)
+  const [firstStartDismissed, setFirstStartDismissed] = useState(false)
+  const [summaryLoaded, setSummaryLoaded] = useState(false)
+
+  useEffect(() => {
+    setFirstStartDismissed(readFirstStartDismissed())
+  }, [])
+
+  useEffect(() => {
+    if (!session) {
+      setSummaryLoaded(false)
+      setMedicationsCount(0)
+      setAppointmentsToday(0)
+      setAppointmentsTotal(0)
+      setPeopleCount(0)
+      setScheduleItems(0)
+      return
+    }
+    setSummaryLoaded(false)
+    void fetch('/api/dashboard/summary', { credentials: 'same-origin' })
+      .then(async (res) => {
+        if (!res.ok) return
+        const data = (await res.json()) as {
+          medicationsCount?: number
+          appointmentsToday?: number
+          appointmentsTotal?: number
+          peopleCount?: number
+          scheduleItems?: number
+        }
+        setMedicationsCount(data.medicationsCount ?? 0)
+        setAppointmentsToday(data.appointmentsToday ?? 0)
+        setAppointmentsTotal(data.appointmentsTotal ?? 0)
+        setPeopleCount(data.peopleCount ?? 0)
+        setScheduleItems(data.scheduleItems ?? 0)
+      })
+      .catch(() => undefined)
+      .finally(() => setSummaryLoaded(true))
+  }, [session])
+
+  const showFirstStart =
+    summaryLoaded &&
+    Boolean(session) &&
+    !firstStartDismissed &&
+    medicationsCount === 0 &&
+    appointmentsTotal === 0
+
+  function handleExploreOnOwn() {
+    dismissFirstStart()
+    setFirstStartDismissed(true)
+  }
+
   const hour = new Date().getHours()
   const greetingPrefix = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
   const greeting = userName.trim() ? `${greetingPrefix}, ${userName.trim()}` : greetingPrefix
-
-  // TODO: wire counts from APIs when dashboard data is available
-  const medicationsCount = 0
-  const appointmentsToday = 0
-  const peopleCount = 0
-  const scheduleItems = 0
 
   const stats = [
     {
@@ -129,7 +180,7 @@ export default function Home() {
         <div className="mx-auto mt-6 h-px max-w-xs bg-gradient-to-r from-transparent via-care-secondary to-transparent" />
       </section>
 
-      <HomeOnboarding />
+      {!showFirstStart ? <HomeOnboarding /> : null}
 
       {!session ? (
         <div className="mb-8 rounded-garden border border-care-border bg-white/95 p-4 text-center">
@@ -146,6 +197,10 @@ export default function Home() {
         </div>
       ) : null}
 
+      {showFirstStart ? (
+        <FirstStartFocus onExplore={handleExploreOnOwn} />
+      ) : (
+        <>
       <section className="garden-surface-muted mb-8 p-6 md:p-7">
         <h2 className="font-display text-2xl font-semibold text-care-text">{greeting}</h2>
         <p className="mt-2 text-base leading-relaxed text-care-muted">{todayAtAGlance}</p>
@@ -217,6 +272,8 @@ export default function Home() {
           })}
         </div>
       </section>
+        </>
+      )}
     </div>
   )
 }

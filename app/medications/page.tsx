@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, Pill, Clock, Calendar, Image as ImageIcon } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { MedicationsTodayPanel } from '@/components/MedicationsTodayPanel'
 import { loadProtectedList } from '@/lib/loadProtectedList'
 
 interface Medication {
@@ -70,6 +71,8 @@ export default function MedicationsPage() {
           {loadError}
         </div>
       ) : null}
+
+      <MedicationsTodayPanel medications={medications} />
 
       {loading ? (
         <p className="text-garden-wood/75">Loading…</p>

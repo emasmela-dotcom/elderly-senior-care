@@ -53,3 +53,38 @@ body {
     text-wrap: balance;
   }
 }
+
+/* One-tap large text mode for easier reading */
+html.care-large-text {
+  font-size: 112.5%;
+}
+
+html.care-large-text .garden-btn,
+html.care-large-text .garden-btn-outline,
+html.care-large-text .garden-btn-accent {
+  @apply min-h-[52px] px-5 py-3 text-base;
+}
+
+html.care-large-text nav a,
+html.care-large-text nav button {
+  @apply text-base;
+}
+
+html.care-large-text h1 {
+  @apply text-4xl md:text-5xl;
+}
+
+html.care-large-text h2 {
+  @apply text-3xl;
+}
+
+html.care-large-text h3 {
+  @apply text-2xl;
+}
+
+html.care-large-text .garden-field,
+html.care-large-text input,
+html.care-large-text select,
+html.care-large-text textarea {
+  @apply text-base py-3 min-h-[48px];
+}

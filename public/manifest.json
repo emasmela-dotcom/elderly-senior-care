@@ -1,7 +1,7 @@
 {
-  "name": "CareConnect 24/7 - Caregiver App",
+  "name": "CareConnect 24/7",
   "short_name": "CareConnect 24/7",
-  "description": "24/7 comprehensive care management platform for elderly and senior care",
+  "description": "Medications, appointments, and health records in one place for seniors and families.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F8F9FA",

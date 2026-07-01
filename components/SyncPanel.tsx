@@ -85,14 +85,6 @@ export function SyncPanel({ onImportComplete, autoImport }: SyncPanelProps) {
     }
   }
 
-  const coming: { label: string; note: string }[] = [
-    { label: 'Apple Calendar', note: 'iCloud sync via CalDAV' },
-    { label: 'Gmail / Outlook', note: 'Pulls appointment confirmation emails' },
-    { label: 'Pharmacy (CVS, Walgreens)', note: 'Imports your prescriptions' },
-    { label: 'MyChart / Epic', note: 'Connects to your patient portal' },
-    { label: 'Apple Health / Google Fit', note: 'Syncs vitals you already track' },
-  ]
-
   return (
     <div className="border border-garden-sage-200/65 bg-white mb-6 rounded-sm">
       <button
@@ -261,26 +253,9 @@ export function SyncPanel({ onImportComplete, autoImport }: SyncPanelProps) {
             )}
           </section>
 
-          <div className="border-t border-garden-sage-200/40 pt-5 space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-garden-wood/40 mb-3">
-              Coming soon
-            </p>
-            {coming.map(({ label, note }) => (
-              <div
-                key={label}
-                className="flex items-center justify-between py-2.5 opacity-45"
-                aria-disabled="true"
-              >
-                <div>
-                  <p className="text-sm font-medium text-garden-wood">{label}</p>
-                  <p className="text-xs text-garden-wood/60 mt-0.5">{note}</p>
-                </div>
-                <span className="text-xs border border-garden-clay-200/60 text-garden-wood/50 px-2.5 py-1 rounded-sm">
-                  Soon
-                </span>
-              </div>
-            ))}
-          </div>
+          <p className="text-xs text-garden-wood/55 leading-relaxed border-t border-garden-sage-200/40 pt-4">
+            You can also add appointments manually with Schedule Appointment above.
+          </p>
         </div>
       )}
     </div>

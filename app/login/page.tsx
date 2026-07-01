@@ -14,7 +14,6 @@ export default function LoginPage() {
   }, [])
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [role, setRole] = useState<'staff' | 'family'>('staff')
   const [error, setError] = useState('')
 
   async function onSubmit(e: FormEvent) {
@@ -23,11 +22,11 @@ export default function LoginPage() {
     const res = await signIn('credentials', {
       email,
       password,
-      role,
+      role: 'staff',
       redirect: false,
     })
     if (res?.error) {
-      setError('Invalid email or password.')
+      setError('That email or password did not work. Try again or use Support in the footer.')
       return
     }
     router.push(callbackUrl)
@@ -37,10 +36,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white border border-garden-sage-200/65 p-8 shadow-sm">
-        <h1 className="text-2xl font-bold text-garden-wood mb-1">Sign in</h1>
+        <h1 className="text-2xl font-bold text-garden-wood mb-1">Sign in to your account</h1>
         <p className="text-sm text-garden-wood/75 mb-6">
-          Use the demo password from <code className="text-garden-wood">AUTH_DEMO_PASSWORD</code>{' '}
-          (default <code className="text-garden-wood">demo</code>).
+          Enter your email and password to save your medications, appointments, and schedule.
         </p>
         <form onSubmit={onSubmit} className="space-y-4">
           <div>
@@ -73,31 +71,6 @@ export default function LoginPage() {
               className="w-full border border-garden-clay-200/85 px-3 py-2 text-garden-wood focus:ring-2 focus:ring-garden-sage-500 focus:border-garden-sage-600"
             />
           </div>
-          <div>
-            <span className="block text-sm font-medium text-garden-wood mb-2">Account type</span>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2 text-garden-wood">
-                <input
-                  type="radio"
-                  name="role"
-                  value="staff"
-                  checked={role === 'staff'}
-                  onChange={() => setRole('staff')}
-                />
-                Staff
-              </label>
-              <label className="flex items-center gap-2 text-garden-wood">
-                <input
-                  type="radio"
-                  name="role"
-                  value="family"
-                  checked={role === 'family'}
-                  onChange={() => setRole('family')}
-                />
-                Family (read-only)
-              </label>
-            </div>
-          </div>
           {error ? (
             <p className="text-sm text-red-700" role="alert">
               {error}
@@ -105,7 +78,7 @@ export default function LoginPage() {
           ) : null}
           <button
             type="submit"
-            className="w-full py-2 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 transition-colors font-medium"
+            className="w-full py-3 bg-garden-sage-600 text-white border border-garden-sage-700 hover:bg-garden-sage-700 transition-colors font-medium text-base min-h-[48px]"
           >
             Sign in
           </button>

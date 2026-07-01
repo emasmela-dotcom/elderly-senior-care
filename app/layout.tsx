@@ -20,8 +20,9 @@ const fraunces = Fraunces({
 })
 
 export const metadata: Metadata = {
-  title: 'CareConnect 24/7 - Caregiver Management Platform',
-  description: '24/7 comprehensive care management platform for elderly and senior care. Mobile-first design for caregivers and families.',
+  title: 'CareConnect 24/7 - Your Care, Anytime',
+  description:
+    'Medications, appointments, health records, and the people you trust — organized in one calm place for seniors and families.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,

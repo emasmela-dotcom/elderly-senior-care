@@ -5,8 +5,7 @@ export default function FamilySharePage() {
     <div className="container mx-auto px-4 py-8 max-w-xl">
       <h1 className="text-3xl font-bold text-garden-wood mb-4">Share health data</h1>
       <p className="text-garden-wood/80 mb-6">
-        Grant access only with documented consent from the resident or authorized representative. This screen is a
-        placeholder for a future guided sharing flow.
+        Choose who can view your health summary. Manage access from the Family page when you are ready to share.
       </p>
       <Link href="/family" className="text-garden-sage-800 hover:text-garden-sage-900 font-medium">
         ← Back to family sharing
