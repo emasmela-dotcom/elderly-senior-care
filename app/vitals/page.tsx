@@ -10,6 +10,7 @@ import {
   Droplet,
 } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { VitalsImportPanel } from '@/components/VitalsImportPanel'
 import { loadProtectedList } from '@/lib/loadProtectedList'
 import {
   LineChart,
@@ -99,6 +100,8 @@ export default function VitalsPage() {
           {loadError}
         </div>
       ) : null}
+
+      <VitalsImportPanel onImportComplete={() => void load()} />
 
       {loading ? (
         <p className="text-garden-wood/75">Loading…</p>

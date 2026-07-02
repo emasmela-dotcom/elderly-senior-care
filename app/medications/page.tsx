@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Plus, Pill, Clock, Calendar, Image as ImageIcon } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
 import { MedicationsTodayPanel } from '@/components/MedicationsTodayPanel'
+import { PharmacyImportPanel } from '@/components/PharmacyImportPanel'
 import { loadProtectedList } from '@/lib/loadProtectedList'
 
 interface Medication {
@@ -71,6 +72,8 @@ export default function MedicationsPage() {
           {loadError}
         </div>
       ) : null}
+
+      <PharmacyImportPanel onImportComplete={() => void load()} />
 
       <MedicationsTodayPanel medications={medications} />
 

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Plus, FileText } from 'lucide-react'
 import { DownloadJsonButton } from '@/components/DownloadJsonButton'
+import { EpicMyChartPanel } from '@/components/EpicMyChartPanel'
 import { loadProtectedList } from '@/lib/loadProtectedList'
 
 type Row = {
@@ -62,6 +63,8 @@ export default function HealthRecordsPage() {
           {loadError}
         </div>
       ) : null}
+
+      <EpicMyChartPanel onImportComplete={() => void load()} />
 
       {loading ? (
         <p className="text-garden-wood/75">Loading…</p>

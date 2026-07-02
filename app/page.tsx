@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { Calendar, FileText, Pill, Users } from 'lucide-react'
 import { WatercolorLeaves } from '@/components/WatercolorLeaves'
 import { HomeOnboarding } from '@/components/HomeOnboarding'
+import { HomeSyncSection } from '@/components/HomeSyncSection'
 import { FirstStartFocus, dismissFirstStart, readFirstStartDismissed } from '@/components/FirstStartFocus'
 
 export default function Home() {
@@ -181,6 +182,8 @@ export default function Home() {
       </section>
 
       {!showFirstStart ? <HomeOnboarding /> : null}
+
+      <HomeSyncSection />
 
       {!session ? (
         <div className="mb-8 rounded-garden border border-care-border bg-white/95 p-4 text-center">

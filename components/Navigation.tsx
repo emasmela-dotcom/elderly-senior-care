@@ -12,6 +12,7 @@ import {
   Users,
   Pill,
   ClipboardList,
+  RefreshCw,
 } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useI18n } from '@/components/I18nProvider'
@@ -51,6 +52,33 @@ export default function Navigation() {
 
           <div className="hidden lg:flex items-center justify-end gap-2">
             <LargeTextToggle />
+            <Link
+              href="/sync"
+              className={clsx(
+                'inline-flex items-center gap-1.5 rounded-garden px-3 py-2 text-sm font-medium transition-colors',
+                pathname === '/sync'
+                  ? 'bg-care-primary text-white shadow-sm'
+                  : 'text-care-text hover:bg-care-hover'
+              )}
+            >
+              <RefreshCw
+                size={16}
+                className={clsx('shrink-0', pathname === '/sync' ? 'text-white' : 'text-care-secondary')}
+                aria-hidden
+              />
+              Sync
+            </Link>
+            <Link
+              href="/pricing"
+              className={clsx(
+                'inline-flex items-center rounded-garden px-3 py-2 text-sm font-medium transition-colors',
+                pathname === '/pricing'
+                  ? 'bg-care-primary text-white shadow-sm'
+                  : 'text-care-text hover:bg-care-hover'
+              )}
+            >
+              Pricing
+            </Link>
             <label className="ml-2 flex items-center gap-1 text-sm text-care-muted">
               <span className="sr-only">{t.nav.language}</span>
               <select
@@ -116,6 +144,22 @@ export default function Navigation() {
                   </Link>
                 )
               })}
+              <Link
+                href="/sync"
+                className={clsx(
+                  'inline-flex items-center whitespace-nowrap rounded-garden px-3 py-2 text-sm font-medium transition-colors',
+                  pathname === '/sync'
+                    ? 'bg-care-primary text-white shadow-sm'
+                    : 'text-care-text hover:bg-care-hover'
+                )}
+              >
+                <RefreshCw
+                  size={16}
+                  className={clsx('mr-2 shrink-0', pathname === '/sync' ? 'text-white' : 'text-care-secondary')}
+                  aria-hidden
+                />
+                Sync
+              </Link>
             </div>
           </div>
         </div>
@@ -145,6 +189,31 @@ export default function Navigation() {
                   </Link>
                 )
               })}
+              <Link
+                href="/sync"
+                onClick={() => setMobileMenuOpen(false)}
+                className={clsx(
+                  'flex items-center rounded-garden px-4 py-3 text-sm font-medium transition-colors',
+                  pathname === '/sync' ? 'bg-care-primary text-white' : 'text-care-text hover:bg-care-hover'
+                )}
+              >
+                <RefreshCw
+                  size={20}
+                  className={clsx('mr-3 shrink-0', pathname === '/sync' ? 'text-white' : 'text-care-secondary')}
+                  aria-hidden
+                />
+                Sync
+              </Link>
+              <Link
+                href="/pricing"
+                onClick={() => setMobileMenuOpen(false)}
+                className={clsx(
+                  'flex items-center rounded-garden px-4 py-3 text-sm font-medium transition-colors',
+                  pathname === '/pricing' ? 'bg-care-primary text-white' : 'text-care-text hover:bg-care-hover'
+                )}
+              >
+                Pricing
+              </Link>
               <div className="px-4 pt-2">
                 <LargeTextToggle className="w-full justify-center mb-2" />
                 <label className="flex flex-col gap-1 text-sm text-care-muted">

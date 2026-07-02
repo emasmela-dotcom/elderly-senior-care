@@ -12,6 +12,7 @@ import {
   ChevronUp,
   Clock,
 } from 'lucide-react'
+import { SyncFileUpload } from '@/components/SyncFileUpload'
 
 interface SyncResult {
   imported: number
@@ -22,6 +23,7 @@ interface SyncResult {
 interface SyncPanelProps {
   onImportComplete?: () => void
   autoImport?: boolean
+  defaultOpen?: boolean
 }
 
 type Phase =
@@ -31,9 +33,9 @@ type Phase =
   | 'success'
   | 'error'
 
-export function SyncPanel({ onImportComplete, autoImport }: SyncPanelProps) {
+export function SyncPanel({ onImportComplete, autoImport, defaultOpen }: SyncPanelProps) {
   const { data: session } = useSession()
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen ?? false)
   const [phase, setPhase] = useState<Phase>('disconnected')
   const [result, setResult] = useState<SyncResult | null>(null)
   const [errorMsg, setErrorMsg] = useState('')
@@ -98,7 +100,7 @@ export function SyncPanel({ onImportComplete, autoImport }: SyncPanelProps) {
           <Calendar size={22} className="text-care-primary shrink-0" aria-hidden />
           <div>
             <p className="text-base font-semibold text-garden-wood leading-tight">
-              Connect your calendar
+              Import from your other apps
             </p>
             <p className="text-sm text-garden-wood/65 mt-0.5">
               We&apos;ll pull in what you already have — no re-typing needed.
@@ -252,6 +254,22 @@ export function SyncPanel({ onImportComplete, autoImport }: SyncPanelProps) {
               </div>
             )}
           </section>
+
+          <SyncFileUpload
+            title="Apple Calendar"
+            description="On iPhone or Mac: export your calendar as a .ics file, then upload it here."
+            accept=".ics,text/calendar"
+            uploadUrl="/api/sync/apple-calendar"
+            onComplete={() => onImportComplete?.()}
+          />
+
+          <SyncFileUpload
+            title="Appointment emails"
+            description="Save a confirmation email as .eml or download the calendar invite as .ics, then upload it here."
+            accept=".ics,.eml,text/calendar,message/rfc822"
+            uploadUrl="/api/sync/email-appointments"
+            onComplete={() => onImportComplete?.()}
+          />
 
           <p className="text-xs text-garden-wood/55 leading-relaxed border-t border-garden-sage-200/40 pt-4">
             You can also add appointments manually with Schedule Appointment above.
