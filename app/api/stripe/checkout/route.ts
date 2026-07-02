@@ -46,8 +46,14 @@ export async function POST(req: Request) {
       mode: 'subscription',
       customer: customerId,
       line_items: [{ price: getPriceId(plan), quantity: 1 }],
+      payment_method_collection: 'if_required',
       subscription_data: {
         trial_period_days: TRIAL_DAYS,
+        trial_settings: {
+          end_behavior: {
+            missing_payment_method: 'cancel',
+          },
+        },
         metadata: { user_email: email },
       },
       success_url: `${getBaseUrl()}/pricing?success=1`,

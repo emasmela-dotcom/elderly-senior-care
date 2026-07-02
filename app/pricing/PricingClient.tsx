@@ -91,8 +91,8 @@ export default function PricingClient() {
           CareConnect 24/7 plans
         </h1>
         <p className="mt-3 text-base leading-relaxed text-care-muted">
-          {TRIAL_DAYS}-day free trial, then keep everything in one place — medications,
-          appointments, vitals, and sync.
+          Start with a {TRIAL_DAYS}-day free trial before paying. Then keep everything in one
+          place — medications, appointments, vitals, and sync.
         </p>
       </header>
 
@@ -102,7 +102,7 @@ export default function PricingClient() {
           role="status"
         >
           <CheckCircle2 className="h-5 w-5 shrink-0 text-care-primary" aria-hidden />
-          You&apos;re all set. Your trial has started.
+          You&apos;re all set. Your free trial has started.
         </p>
       ) : null}
 
@@ -153,7 +153,7 @@ export default function PricingClient() {
             <ul className="mt-5 flex-1 space-y-2 text-sm text-care-text">
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 shrink-0 text-care-success" aria-hidden />
-                {TRIAL_DAYS}-day free trial
+                {TRIAL_DAYS}-day free trial before payment
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 shrink-0 text-care-success" aria-hidden />
@@ -174,7 +174,7 @@ export default function PricingClient() {
                 ? 'Starting…'
                 : sub?.active
                   ? 'Current plan'
-                  : `Start ${TRIAL_DAYS}-day free trial`}
+                  : `Start ${TRIAL_DAYS}-day free trial first`}
             </button>
           </div>
         ))}
