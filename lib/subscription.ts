@@ -1,4 +1,5 @@
 import { getSql } from '@/lib/db'
+import { getStripe, stripeConfigured } from '@/lib/stripe'
 
 export type SubscriptionRow = {
   user_email: string
@@ -19,6 +20,9 @@ export type SubscriptionStatus = {
   currentPeriodEnd: string | null
   needsPayment: boolean
   paymentPrompt: string | null
+  confirmationMessage: string | null
+  hasPaymentMethod: boolean
+  paymentReceived: boolean
   trialDaysLeft: number | null
 }
 
@@ -35,6 +39,9 @@ function emptyStatus(overrides: Partial<SubscriptionStatus> = {}): SubscriptionS
     currentPeriodEnd: null,
     needsPayment: false,
     paymentPrompt: null,
+    confirmationMessage: null,
+    hasPaymentMethod: false,
+    paymentReceived: false,
     trialDaysLeft: null,
     ...overrides,
   }
@@ -50,9 +57,44 @@ function daysUntil(isoDate: string | null): number | null {
 
 export function buildPaymentPrompt(
   status: string,
-  trialEnd: string | null
-): Pick<SubscriptionStatus, 'needsPayment' | 'paymentPrompt' | 'trialDaysLeft'> {
+  trialEnd: string | null,
+  hasPaymentMethod = false
+): Pick<
+  SubscriptionStatus,
+  'needsPayment' | 'paymentPrompt' | 'confirmationMessage' | 'trialDaysLeft' | 'paymentReceived'
+> {
   const trialDaysLeft = daysUntil(trialEnd)
+
+  if (status === 'active') {
+    return {
+      needsPayment: false,
+      paymentPrompt: null,
+      confirmationMessage: 'Payment received. Your CareConnect plan is active.',
+      trialDaysLeft,
+      paymentReceived: true,
+    }
+  }
+
+  if (status === 'trialing' && hasPaymentMethod) {
+    return {
+      needsPayment: false,
+      paymentPrompt: null,
+      confirmationMessage:
+        'Card saved. Your plan will continue automatically when the free trial ends.',
+      trialDaysLeft,
+      paymentReceived: false,
+    }
+  }
+
+  if (status === 'paused' && hasPaymentMethod) {
+    return {
+      needsPayment: false,
+      paymentPrompt: null,
+      confirmationMessage: 'Payment method saved. Your account is being reactivated.',
+      trialDaysLeft: 0,
+      paymentReceived: false,
+    }
+  }
 
   if (status === 'paused') {
     return {
@@ -60,6 +102,7 @@ export function buildPaymentPrompt(
       paymentPrompt:
         'Your free trial has ended. Add a payment method to keep using CareConnect.',
       trialDaysLeft: 0,
+      paymentReceived: false,
     }
   }
 
@@ -69,7 +112,9 @@ export function buildPaymentPrompt(
         needsPayment: true,
         paymentPrompt:
           'Your free trial has ended. Add a payment method to keep your account active.',
+        confirmationMessage: null,
         trialDaysLeft: 0,
+        paymentReceived: false,
       }
     }
     if (trialDaysLeft <= PAYMENT_PROMPT_DAYS) {
@@ -78,7 +123,9 @@ export function buildPaymentPrompt(
         paymentPrompt: `Your free trial ends in ${trialDaysLeft} day${
           trialDaysLeft === 1 ? '' : 's'
         }. Add a payment method to continue after the trial.`,
+        confirmationMessage: null,
         trialDaysLeft,
+        paymentReceived: false,
       }
     }
   }
@@ -86,7 +133,9 @@ export function buildPaymentPrompt(
   return {
     needsPayment: false,
     paymentPrompt: null,
+    confirmationMessage: null,
     trialDaysLeft,
+    paymentReceived: false,
   }
 }
 
@@ -108,6 +157,23 @@ export async function getSubscription(
   return (rows[0] as SubscriptionRow | undefined) ?? null
 }
 
+export async function customerHasPaymentMethod(customerId: string): Promise<boolean> {
+  if (!stripeConfigured()) return false
+  try {
+    const customer = await getStripe().customers.retrieve(customerId)
+    if (customer.deleted) return false
+    if (customer.invoice_settings?.default_payment_method) return true
+    const methods = await getStripe().paymentMethods.list({
+      customer: customerId,
+      type: 'card',
+      limit: 1,
+    })
+    return methods.data.length > 0
+  } catch {
+    return false
+  }
+}
+
 export async function getSubscriptionStatus(
   userEmail: string
 ): Promise<SubscriptionStatus> {
@@ -116,13 +182,17 @@ export async function getSubscriptionStatus(
     if (!row) {
       return emptyStatus()
     }
-    const prompt = buildPaymentPrompt(row.status, row.trial_end)
+    const hasPaymentMethod = row.stripe_customer_id
+      ? await customerHasPaymentMethod(row.stripe_customer_id)
+      : false
+    const prompt = buildPaymentPrompt(row.status, row.trial_end, hasPaymentMethod)
     return {
       active: isActiveStatus(row.status),
       status: row.status,
       planInterval: row.plan_interval,
       trialEnd: row.trial_end,
       currentPeriodEnd: row.current_period_end,
+      hasPaymentMethod,
       ...prompt,
     }
   } catch {

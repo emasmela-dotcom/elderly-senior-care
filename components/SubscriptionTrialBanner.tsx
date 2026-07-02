@@ -2,18 +2,23 @@
 
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { CreditCard } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
+import { CheckCircle2, CreditCard } from 'lucide-react'
 
 type SubStatus = {
   needsPayment?: boolean
   paymentPrompt?: string | null
+  confirmationMessage?: string | null
 }
 
 export function SubscriptionTrialBanner() {
   const { data: session } = useSession()
+  const searchParams = useSearchParams()
   const [sub, setSub] = useState<SubStatus | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const paymentAdded = searchParams.get('payment') === 'added'
 
   useEffect(() => {
     if (!session) {
@@ -26,11 +31,7 @@ export function SubscriptionTrialBanner() {
         setSub((await res.json()) as SubStatus)
       })
       .catch(() => undefined)
-  }, [session])
-
-  if (!session || !sub?.needsPayment || !sub.paymentPrompt) {
-    return null
-  }
+  }, [session, paymentAdded])
 
   async function addPayment() {
     setLoading(true)
@@ -51,6 +52,26 @@ export function SubscriptionTrialBanner() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (!session) return null
+
+  if (sub?.confirmationMessage) {
+    return (
+      <div
+        className="border-b border-care-primary/30 bg-care-hover px-4 py-4 text-care-text"
+        role="status"
+      >
+        <div className="container mx-auto flex items-center gap-2">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-care-primary" aria-hidden />
+          <p className="text-base font-medium leading-relaxed">{sub.confirmationMessage}</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!sub?.needsPayment || !sub.paymentPrompt) {
+    return null
   }
 
   return (

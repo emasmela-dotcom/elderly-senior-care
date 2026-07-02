@@ -114,7 +114,7 @@ export default function PricingClient() {
           role="status"
         >
           <CheckCircle2 className="h-5 w-5 shrink-0 text-care-primary" aria-hidden />
-          Payment method saved. Your plan will continue after the trial.
+          Payment method saved. Stripe will charge your card when the trial ends.
         </p>
       ) : null}
 

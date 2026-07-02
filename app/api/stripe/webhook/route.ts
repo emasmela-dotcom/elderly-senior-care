@@ -146,6 +146,14 @@ export async function POST(req: Request) {
         await syncSubscription(sub)
         break
       }
+      case 'invoice.payment_succeeded': {
+        const invoice = event.data.object as Stripe.Invoice
+        if (invoice.subscription && typeof invoice.subscription === 'string') {
+          const sub = await getStripe().subscriptions.retrieve(invoice.subscription)
+          await syncSubscription(sub)
+        }
+        break
+      }
       default:
         break
     }

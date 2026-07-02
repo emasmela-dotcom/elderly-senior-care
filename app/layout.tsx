@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { Suspense } from 'react'
 import { DM_Sans, Fraunces } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
@@ -59,7 +60,9 @@ export default function RootLayout({
         <Providers>
           <SkipLink />
           <Navigation />
-          <SubscriptionTrialBanner />
+          <Suspense fallback={null}>
+            <SubscriptionTrialBanner />
+          </Suspense>
           <main
             id="main-content"
             className="relative z-[1] min-h-screen"
