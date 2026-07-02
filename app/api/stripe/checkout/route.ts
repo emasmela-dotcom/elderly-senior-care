@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         trial_period_days: TRIAL_DAYS,
         trial_settings: {
           end_behavior: {
-            missing_payment_method: 'cancel',
+            missing_payment_method: 'pause',
           },
         },
         metadata: { user_email: email },

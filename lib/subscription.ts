@@ -17,9 +17,78 @@ export type SubscriptionStatus = {
   planInterval: string | null
   trialEnd: string | null
   currentPeriodEnd: string | null
+  needsPayment: boolean
+  paymentPrompt: string | null
+  trialDaysLeft: number | null
 }
 
-const ACTIVE_STATUSES = new Set(['active', 'trialing'])
+const ACTIVE_STATUSES = new Set(['active', 'trialing', 'paused'])
+
+const PAYMENT_PROMPT_DAYS = 3
+
+function emptyStatus(overrides: Partial<SubscriptionStatus> = {}): SubscriptionStatus {
+  return {
+    active: false,
+    status: 'none',
+    planInterval: null,
+    trialEnd: null,
+    currentPeriodEnd: null,
+    needsPayment: false,
+    paymentPrompt: null,
+    trialDaysLeft: null,
+    ...overrides,
+  }
+}
+
+function daysUntil(isoDate: string | null): number | null {
+  if (!isoDate) return null
+  const end = new Date(isoDate)
+  if (Number.isNaN(end.getTime())) return null
+  const ms = end.getTime() - Date.now()
+  return Math.ceil(ms / (1000 * 60 * 60 * 24))
+}
+
+export function buildPaymentPrompt(
+  status: string,
+  trialEnd: string | null
+): Pick<SubscriptionStatus, 'needsPayment' | 'paymentPrompt' | 'trialDaysLeft'> {
+  const trialDaysLeft = daysUntil(trialEnd)
+
+  if (status === 'paused') {
+    return {
+      needsPayment: true,
+      paymentPrompt:
+        'Your free trial has ended. Add a payment method to keep using CareConnect.',
+      trialDaysLeft: 0,
+    }
+  }
+
+  if (status === 'trialing' && trialDaysLeft !== null) {
+    if (trialDaysLeft <= 0) {
+      return {
+        needsPayment: true,
+        paymentPrompt:
+          'Your free trial has ended. Add a payment method to keep your account active.',
+        trialDaysLeft: 0,
+      }
+    }
+    if (trialDaysLeft <= PAYMENT_PROMPT_DAYS) {
+      return {
+        needsPayment: true,
+        paymentPrompt: `Your free trial ends in ${trialDaysLeft} day${
+          trialDaysLeft === 1 ? '' : 's'
+        }. Add a payment method to continue after the trial.`,
+        trialDaysLeft,
+      }
+    }
+  }
+
+  return {
+    needsPayment: false,
+    paymentPrompt: null,
+    trialDaysLeft,
+  }
+}
 
 export function isActiveStatus(status: string | null | undefined): boolean {
   return Boolean(status && ACTIVE_STATUSES.has(status))
@@ -45,29 +114,19 @@ export async function getSubscriptionStatus(
   try {
     const row = await getSubscription(userEmail)
     if (!row) {
-      return {
-        active: false,
-        status: 'none',
-        planInterval: null,
-        trialEnd: null,
-        currentPeriodEnd: null,
-      }
+      return emptyStatus()
     }
+    const prompt = buildPaymentPrompt(row.status, row.trial_end)
     return {
       active: isActiveStatus(row.status),
       status: row.status,
       planInterval: row.plan_interval,
       trialEnd: row.trial_end,
       currentPeriodEnd: row.current_period_end,
+      ...prompt,
     }
   } catch {
-    return {
-      active: false,
-      status: 'unknown',
-      planInterval: null,
-      trialEnd: null,
-      currentPeriodEnd: null,
-    }
+    return emptyStatus({ status: 'unknown' })
   }
 }
 

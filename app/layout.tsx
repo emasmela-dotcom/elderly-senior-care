@@ -6,6 +6,7 @@ import { Providers } from './providers'
 import { SkipLink } from '@/components/SkipLink'
 import { GardenBackdrop } from '@/components/GardenBackdrop'
 import Footer from '@/components/Footer'
+import { SubscriptionTrialBanner } from '@/components/SubscriptionTrialBanner'
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -58,6 +59,7 @@ export default function RootLayout({
         <Providers>
           <SkipLink />
           <Navigation />
+          <SubscriptionTrialBanner />
           <main
             id="main-content"
             className="relative z-[1] min-h-screen"

@@ -25,6 +25,8 @@ export default function PricingClient() {
 
   const success = searchParams.get('success') === '1'
   const canceled = searchParams.get('canceled') === '1'
+  const paymentAdded = searchParams.get('payment') === 'added'
+  const paymentCanceled = searchParams.get('payment') === 'canceled'
 
   useEffect(() => {
     if (!session) return
@@ -34,7 +36,7 @@ export default function PricingClient() {
         setSub((await res.json()) as SubStatus)
       })
       .catch(() => undefined)
-  }, [session, success])
+  }, [session, success, paymentAdded])
 
   async function startCheckout(plan: 'monthly' | 'yearly') {
     if (!session) {
@@ -103,6 +105,22 @@ export default function PricingClient() {
         >
           <CheckCircle2 className="h-5 w-5 shrink-0 text-care-primary" aria-hidden />
           You&apos;re all set. Your free trial has started.
+        </p>
+      ) : null}
+
+      {paymentAdded ? (
+        <p
+          className="mx-auto mb-6 flex max-w-xl items-center justify-center gap-2 rounded-garden border border-care-primary/30 bg-care-hover px-4 py-3 text-base text-care-text"
+          role="status"
+        >
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-care-primary" aria-hidden />
+          Payment method saved. Your plan will continue after the trial.
+        </p>
+      ) : null}
+
+      {paymentCanceled ? (
+        <p className="mx-auto mb-6 max-w-xl text-center text-base text-care-muted" role="status">
+          Payment not added. Add a card before your trial ends to keep your account.
         </p>
       ) : null}
 

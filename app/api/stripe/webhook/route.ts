@@ -44,6 +44,53 @@ async function syncSubscription(sub: Stripe.Subscription, fallbackEmail?: string
   })
 }
 
+async function attachPaymentFromSetup(session: Stripe.Checkout.Session) {
+  const email = userEmailFromMeta(session.metadata)
+  if (!email) return
+
+  const customerId =
+    typeof session.customer === 'string' ? session.customer : session.customer?.id ?? null
+  if (!customerId || !session.setup_intent) return
+
+  const stripe = getStripe()
+  const setupIntent =
+    typeof session.setup_intent === 'string'
+      ? await stripe.setupIntents.retrieve(session.setup_intent)
+      : session.setup_intent
+
+  const paymentMethodId =
+    typeof setupIntent.payment_method === 'string'
+      ? setupIntent.payment_method
+      : setupIntent.payment_method?.id
+
+  if (!paymentMethodId) return
+
+  await stripe.customers.update(customerId, {
+    invoice_settings: { default_payment_method: paymentMethodId },
+  })
+
+  const subs = await stripe.subscriptions.list({
+    customer: customerId,
+    status: 'all',
+    limit: 1,
+  })
+  const sub = subs.data[0]
+  if (!sub) return
+
+  await stripe.subscriptions.update(sub.id, {
+    default_payment_method: paymentMethodId,
+  })
+
+  if (sub.status === 'paused') {
+    await stripe.subscriptions.resume(sub.id)
+    const resumed = await stripe.subscriptions.retrieve(sub.id)
+    await syncSubscription(resumed, email)
+    return
+  }
+
+  await syncSubscription(sub, email)
+}
+
 export async function POST(req: Request) {
   if (!stripeConfigured()) {
     return NextResponse.json({ error: 'Stripe not configured' }, { status: 503 })
@@ -72,6 +119,12 @@ export async function POST(req: Request) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
         const email = userEmailFromMeta(session.metadata)
+
+        if (session.mode === 'setup') {
+          await attachPaymentFromSetup(session)
+          break
+        }
+
         if (session.subscription && typeof session.subscription === 'string') {
           const sub = await getStripe().subscriptions.retrieve(session.subscription)
           await syncSubscription(sub, email ?? undefined)
@@ -86,7 +139,9 @@ export async function POST(req: Request) {
       }
       case 'customer.subscription.created':
       case 'customer.subscription.updated':
-      case 'customer.subscription.deleted': {
+      case 'customer.subscription.deleted':
+      case 'customer.subscription.paused':
+      case 'customer.subscription.resumed': {
         const sub = event.data.object as Stripe.Subscription
         await syncSubscription(sub)
         break
