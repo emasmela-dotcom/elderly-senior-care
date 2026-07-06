@@ -5,7 +5,7 @@ const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth'
 
 export async function GET() {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
 
   const clientId = process.env.GOOGLE_CLIENT_ID
   if (!clientId) {

@@ -5,7 +5,7 @@ const TOKEN_URL = 'https://oauth2.googleapis.com/token'
 
 export async function GET(req: Request) {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
 
   const { searchParams } = new URL(req.url)
   const code = searchParams.get('code')

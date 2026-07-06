@@ -7,7 +7,7 @@ type Ctx = { params: { id: string } }
 
 export async function GET(_req: Request, ctx: Ctx) {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
   const g = familyReadOnlyGuard(auth.session, 'GET')
   if (g) return g
   const { id } = ctx.params
@@ -26,7 +26,7 @@ export async function GET(_req: Request, ctx: Ctx) {
 
 export async function PATCH(req: Request, ctx: Ctx) {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
   const g = familyReadOnlyGuard(auth.session, 'PATCH')
   if (g) return g
   const { id } = ctx.params
@@ -70,7 +70,7 @@ export async function PATCH(req: Request, ctx: Ctx) {
 
 export async function DELETE(_req: Request, ctx: Ctx) {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
   const g = familyReadOnlyGuard(auth.session, 'DELETE')
   if (g) return g
   const { id } = ctx.params

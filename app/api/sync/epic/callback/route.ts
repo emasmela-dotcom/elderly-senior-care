@@ -4,7 +4,7 @@ import { googleRedirectUri } from '@/lib/sync/googleOAuth'
 
 export async function GET(req: Request) {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
 
   const base = process.env.NEXTAUTH_URL ?? 'http://localhost:3000'
   const healthUrl = `${base}/health-records`

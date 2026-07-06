@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   }
 
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
 
   const email = auth.session.user?.email?.trim()
   if (!email) {

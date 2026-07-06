@@ -178,6 +178,11 @@ export default function Home() {
         <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-care-muted">
           You&apos;re in charge. We just make it easier.
         </p>
+        {!session ? (
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-relaxed text-care-text">
+            7-day free trial · no card to start · then $9/month or $79/year
+          </p>
+        ) : null}
         <div className="mx-auto mt-6 h-px max-w-xs bg-gradient-to-r from-transparent via-care-secondary to-transparent" />
       </section>
 

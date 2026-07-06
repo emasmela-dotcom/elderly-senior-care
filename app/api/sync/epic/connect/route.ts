@@ -4,7 +4,7 @@ import { googleRedirectUri } from '@/lib/sync/googleOAuth'
 
 export async function GET() {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
 
   const clientId = process.env.EPIC_CLIENT_ID?.trim()
   const fhirBase = process.env.EPIC_FHIR_BASE_URL?.trim()

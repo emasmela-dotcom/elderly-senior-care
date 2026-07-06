@@ -85,7 +85,7 @@ function parseEvent(event: GCalEvent): {
 
 export async function POST() {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
 
   const guard = familyReadOnlyGuard(auth.session, 'POST')
   if (guard) return guard

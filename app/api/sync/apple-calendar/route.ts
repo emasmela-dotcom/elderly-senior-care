@@ -9,7 +9,7 @@ const MAX_BYTES = 5 * 1024 * 1024
 
 export async function POST(req: Request) {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
 
   const guard = familyReadOnlyGuard(auth.session, 'POST')
   if (guard) return guard

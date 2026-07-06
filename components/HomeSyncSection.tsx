@@ -93,6 +93,9 @@ export function HomeSyncSection() {
             <Link href="/sync" className="garden-btn-outline">
               See how sync works
             </Link>
+            <Link href="/pricing" className="garden-btn-outline">
+              See pricing
+            </Link>
           </>
         )}
       </div>

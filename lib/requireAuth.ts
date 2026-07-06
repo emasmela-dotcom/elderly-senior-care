@@ -1,9 +1,9 @@
-import { getServerSession } from 'next-auth'
+import { getServerSession, type Session } from 'next-auth'
 import { NextResponse } from 'next/server'
 import { authOptions } from '@/lib/authOptions'
 
 export type AuthResult =
-  | { ok: true; session: NonNullable<Awaited<ReturnType<typeof getServerSession>>> }
+  | { ok: true; session: Session }
   | { ok: false; response: NextResponse }
 
 export async function requireSession(): Promise<AuthResult> {

@@ -5,7 +5,7 @@ import { refreshGoogleAccessToken } from '@/lib/sync/googleOAuth'
 
 export async function GET() {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
 
   const cookieStore = await cookies()
   const connected = !!(

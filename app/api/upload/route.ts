@@ -5,7 +5,7 @@ const MAX_BYTES = 350_000
 
 export async function POST(req: Request) {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
   const g = familyReadOnlyGuard(auth.session, 'POST')
   if (g) return g
   const form = await req.formData()

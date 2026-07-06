@@ -101,6 +101,7 @@ export function buildPaymentPrompt(
       needsPayment: true,
       paymentPrompt:
         'Your free trial has ended. Add a payment method to keep using CareConnect.',
+      confirmationMessage: null,
       trialDaysLeft: 0,
       paymentReceived: false,
     }
@@ -161,8 +162,10 @@ export async function customerHasPaymentMethod(customerId: string): Promise<bool
   if (!stripeConfigured()) return false
   try {
     const customer = await getStripe().customers.retrieve(customerId)
-    if (customer.deleted) return false
-    if (customer.invoice_settings?.default_payment_method) return true
+    if ('deleted' in customer && customer.deleted) return false
+    if ('invoice_settings' in customer && customer.invoice_settings?.default_payment_method) {
+      return true
+    }
     const methods = await getStripe().paymentMethods.list({
       customer: customerId,
       type: 'card',

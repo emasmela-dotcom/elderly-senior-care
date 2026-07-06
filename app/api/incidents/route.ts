@@ -6,7 +6,7 @@ import { sendCareNotification } from '@/lib/notify'
 
 export async function GET() {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
   const g = familyReadOnlyGuard(auth.session, 'GET')
   if (g) return g
   try {
@@ -21,7 +21,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
   const g = familyReadOnlyGuard(auth.session, 'POST')
   if (g) return g
   try {

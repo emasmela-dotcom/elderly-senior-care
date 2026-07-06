@@ -5,7 +5,7 @@ import { familyReadOnlyGuard, requireSession } from '@/lib/requireAuth'
 
 export async function GET() {
   const auth = await requireSession()
-  if (!auth.ok) return auth.response
+  if (auth.ok === false) return auth.response
 
   const guard = familyReadOnlyGuard(auth.session, 'GET')
   if (guard) return guard
