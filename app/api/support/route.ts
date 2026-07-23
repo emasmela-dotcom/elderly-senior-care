@@ -32,10 +32,10 @@ export async function POST(req: Request) {
     const result = await sendSupportMessage({ name, email, message })
 
     if (!result.sent) {
+      const fallback = result.fallbackEmail || 'apputilitybuilder@gmail.com'
       return NextResponse.json(
         {
-          error:
-            'We could not send your message right now. Please try again in a few minutes.',
+          error: `We could not send your message right now. Please email ${fallback} directly.`,
         },
         { status: 503 }
       )

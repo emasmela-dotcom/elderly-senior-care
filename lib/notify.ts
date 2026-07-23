@@ -53,7 +53,9 @@ export async function sendSupportMessage(opts: {
   message: string
 }): Promise<SendResult> {
   const key = process.env.RESEND_API_KEY?.trim()
-  const to = process.env.NOTIFY_TO_EMAIL?.trim() || SUPPORT_INBOX
+  // Support always goes to the shared inbox (same as CreatorFlow / ToolMarket).
+  // NOTIFY_TO_EMAIL is only for care alerts — do not divert support mail.
+  const to = process.env.SUPPORT_TO_EMAIL?.trim() || SUPPORT_INBOX
   const subject = `CareConnect support from ${opts.name}`
   const html = `<p><strong>Name:</strong> ${escapeHtml(opts.name)}</p>
 <p><strong>Email:</strong> ${escapeHtml(opts.email)}</p>

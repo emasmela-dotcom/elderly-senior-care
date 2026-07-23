@@ -22,6 +22,15 @@ export default function SupportPage() {
           <p className="text-sm text-garden-wood/75 mt-2 leading-relaxed">
             Send a message from here — your email app will not open. We&apos;ll reply to the address you enter below.
           </p>
+          <p className="text-sm text-garden-wood mt-3">
+            Or email{' '}
+            <a
+              href="mailto:apputilitybuilder@gmail.com"
+              className="font-medium text-care-primary underline underline-offset-2 hover:text-care-primary/90"
+            >
+              apputilitybuilder@gmail.com
+            </a>
+          </p>
         </header>
 
         <SupportForm />
